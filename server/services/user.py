@@ -51,11 +51,15 @@ class User(db.Model):
         if user_to_delete:
             db.session.delete(user_to_delete)
             db.session.commit()
-            return "User deleted successfully"
-        return "User not found"
+            return jsonify({'message': "User deleted successfully"}), 200
+        return jsonify({'message': "User not found"}), 400
     
     def get_user(user_id):
-        return User.query.get(user_id)
+        return jsonify({'user': to_dict(User.query.get(user_id))}), 200
     
     def get_all_users():
-        return User.query.all()
+        users = User.query.all()
+        users_list = []
+        for user in users:
+            users_list.append(to_dict(user))
+        return jsonify({'users': users_list}), 200

@@ -31,27 +31,8 @@ def delete_user():
 @user_api.route('/get-user', methods=['GET'])
 def get_user():
     user_id = request.args.get('user_id')
-    user = User.get_user(user_id)
-    return {
-        'user_id': user.user_id,
-        'f_name': user.f_name,
-        'l_name': user.l_name,
-        'email': user.email,
-        'password': user.password,
-        'phone': user.phone
-    }, 201
+    return User.get_user(user_id)
 
 @user_api.route('/get-all-users', methods=['GET'])
 def get_all_user():
-    returned_users = User.get_all_users()
-    users = []
-    for user in returned_users:
-        users.append({
-        'user_id': user.user_id,
-        'f_name': user.f_name,
-        'l_name': user.l_name,
-        'email': user.email,
-        'password': user.password,
-        'phone': user.phone
-        })
-    return users, 201
+    return User.get_all_users()
