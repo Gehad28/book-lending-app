@@ -59,10 +59,3 @@ class User(db.Model):
     
     def get_all_users():
         return User.query.all()
-    
-    def login(email, password):
-        user = User.query.filter_by(email=email).first()
-        if user and password == user.password:
-            return user
-        else:
-            raise ValueError("Incorrect email or password")

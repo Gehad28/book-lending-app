@@ -16,3 +16,9 @@ class RegisterForm(FlaskForm):
     # ?: Means optional
     # $: Ensures the ending of the string
     submit = SubmitField('Submit')
+
+class LoginForm(FlaskForm):
+    message = "Incorrect email or password"
+    email = StringField('email', validators=[DataRequired(message), Email()])
+    password = StringField('password', validators=[DataRequired(message)])
+    submit = SubmitField('Submit')
