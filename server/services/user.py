@@ -1,5 +1,8 @@
 from server import db
 from sqlalchemy.sql import func
+from server.forms import RegisterForm
+from flask import jsonify
+from server.helper import to_dict
 
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
@@ -17,13 +20,14 @@ class User(db.Model):
         self.password = password
         self.phone = phone
 
-    def add_user(self):
-        if not self.f_name or not self.email or not self.password or not self.phone:
-            raise ValueError("Complete required fields")
-        else:
+    def add_user(self, form_data):
+        form = RegisterForm(form_data)
+        if form.validate_on_submit():
             db.session.add(self)
             db.session.commit()
-            return self
+            return jsonify({'user': to_dict(self)}), 200
+        else:
+            return jsonify({'errors': form.errors}), 400
 
     def update_user(self, user_id):
         user_to_update = User.query.get(user_id)
