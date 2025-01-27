@@ -44,7 +44,7 @@ class User(db.Model):
         Add a new user to the database
         
         Keyword arguments:
-        form_data -- Data of the register form
+        `form_data` -- Data of the register form
         Return: A JSON response containing the status of the user creation with the new user in case of success.
         """
         
@@ -61,7 +61,7 @@ class User(db.Model):
         Update an existing user in the databse
         
         Keyword arguments:
-        user_id -- The ID of the user to be updated
+        `user_id` -- The ID of the user to be updated
         Return: A JSON response containing the status of the user updating with the updated user in case of success.
         """
         
@@ -86,7 +86,7 @@ class User(db.Model):
         Delete a user from the database
         
         Keyword arguments:
-        user_id -- The ID of the user to be deleted
+        `user_id` -- The ID of the user to be deleted
         Return: A JSON response containing the status of the user deletion.
         """
         
@@ -102,7 +102,7 @@ class User(db.Model):
         Fetch a user from the database.
         
         Keyword arguments:
-        user_id -- The ID of the user to be fetched
+        `user_id` -- The ID of the user to be fetched
         Return: A JSON response containing the status of the user fetching with the user in case of success.
         """
         
