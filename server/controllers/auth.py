@@ -3,6 +3,10 @@ from server.services.auth import Authentication
 
 auth = Blueprint('/', __name__, url_prefix='/auth')
 
+@auth.route('/is_logged_in')
+def is_logged_in():
+    return Authentication.is_logged_in()
+
 @auth.route('/login', methods=['POST'])
 def login():
     """

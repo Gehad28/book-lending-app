@@ -12,7 +12,7 @@ def create_app():
     app.config['WTF_CSRF_ENABLED'] = False
     app.secret_key = 'SECRET KEY'
     app.permanent_session_lifetime = timedelta(days=5)
-    CORS(app)
+    CORS(app, supports_credentials=True)
 
     db.init_app(app)
 

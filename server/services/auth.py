@@ -12,6 +12,12 @@ class Authentication():
     - logout()
     """
 
+    def is_logged_in():
+        if 'user' in session:
+            return jsonify({'logged_in': True, 'user': session['user']})
+        else:
+            return jsonify({'logged_in': False})
+
     def login(form_data):
         """
         Authenticating the user to log in.
@@ -25,7 +31,7 @@ class Authentication():
         if form.validate_on_submit():
             user = User.query.filter_by(email=form.email.data).first()
             if user and form.password.data == user.password:
-                session['user'] = user.user_id
+                session['user'] = to_dict(user)
                 return jsonify({'user': to_dict(user)}), 200
             else:
                 return jsonify({'error': "Incorrect email or password"}), 400
