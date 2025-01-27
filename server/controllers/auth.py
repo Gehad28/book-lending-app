@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session
+from flask import Blueprint, request, session
 from server.services.user import User
 
 auth = Blueprint('/', __name__, url_prefix='/auth')
