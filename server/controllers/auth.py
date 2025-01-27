@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session
+from flask import Blueprint, request
 from server.services.auth import Authentication
 
 auth = Blueprint('/', __name__, url_prefix='/auth')

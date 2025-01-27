@@ -1,5 +1,4 @@
 from server.forms import LoginForm
-from server import db
 from flask import jsonify, session
 from server.helper import to_dict
 from server.services.user import User

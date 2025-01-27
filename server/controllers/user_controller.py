@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 from server.services.user import User
 
 user_api = Blueprint('user', __name__, url_prefix='/user')
