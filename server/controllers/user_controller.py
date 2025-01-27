@@ -9,11 +9,11 @@ def register():
     Register end point.
 
     This endpoint accepts the following form data:
-    - f_name: The user's first name.
-    - l_name: The user's last name.
-    - email: The user's email address.
-    - password: The user's password.
-    - phone: The user's phone number.
+    - `f_name`: The user's first name.
+    - `l_name`: The user's last name.
+    - `email`: The user's email address.
+    - `password`: The user's password.
+    - `phone`: The user's phone number.
     
     Return: A JSON response containing the status of the user creation with the new user in case of success.
     """
@@ -28,11 +28,11 @@ def update_user():
     Update user end point.
 
     This endpoint accepts the following form data:
-    - f_name: The user's first name.
-    - l_name: The user's last name.
-    - email: The user's email address.
-    - password: The user's password.
-    - phone: The user's phone number.
+    - `f_name`: The user's first name.
+    - `l_name`: The user's last name.
+    - `email`: The user's email address.
+    - `password`: The user's password.
+    - `phone`: The user's phone number.
     
     Return: A JSON response containing the status of the user updating with the updated user in case of success.
     """

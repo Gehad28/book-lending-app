@@ -18,7 +18,7 @@ class Authentication():
         Authenticating the user to log in.
         
         Keyword arguments:
-        form_data -- Data of the register form
+        `form_data` -- Data of the register form
         Return: A JSON response containing the status of the user logging in with the user in case of success.
         """
 

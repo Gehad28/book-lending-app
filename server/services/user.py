@@ -9,12 +9,12 @@ class User(db.Model):
     A User class that is connected with the User table in the database.
     
     Properties:
-    - user_id: The ID of the user.
-    - f_name: The user's first name.
-    - l_name: The user's last name.
-    - email: The user's email address.
-    - password: The user's password.
-    - phone: The user's phone number.
+    - `user_id`: The ID of the user.
+    - `f_name`: The user's first name.
+    - `l_name`: The user's last name.
+    - `email`: The user's email address.
+    - `password`: The user's password.
+    - `phone`: The user's phone number.
 
     Methods:
     - add_user(form_data)
