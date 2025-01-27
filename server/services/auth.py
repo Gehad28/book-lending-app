@@ -5,7 +5,23 @@ from server.helper import to_dict
 from server.services.user import User
 
 class Authentication():
+    """
+    A class For user authentication.
+
+    Methods:
+    - login(form_data)
+    - logout()
+    """
+
     def login(form_data):
+        """
+        Authenticating the user to log in.
+        
+        Keyword arguments:
+        form_data -- Data of the register form
+        Return: A JSON response containing the status of the user logging in with the user in case of success.
+        """
+
         form = LoginForm(form_data)
         if form.validate_on_submit():
             user = User.query.filter_by(email=form.email.data).first()
@@ -16,7 +32,13 @@ class Authentication():
                 return jsonify({'error': "Incorrect email or password"}), 400
         else:
             return jsonify({'errors': form.errors}), 400
-        
+    
     def logout():
+        """
+        The user logging out and clearing the session.
+        
+        Return: A JSON response containing the status of the user logging out.
+        """
+
         session.clear()
         return jsonify({'message': "Logged out successfully"}), 201

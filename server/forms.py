@@ -3,6 +3,18 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, Length, Regexp
 
 class RegisterForm(FlaskForm):
+    """
+    A class that extends `FlaskForm` and defines the registration form.
+    
+    Properties:
+    - f_name: The user's first name.
+    - l_name: The user's last name.
+    - email: The user's email address.
+    - password: The user's password.
+    - phone: The user's phone number.
+    - submit: The submit input
+    """
+    
     message = "This filed is required"
     f_name = StringField('f_name', validators=[DataRequired(message)])
     l_name = StringField('l_name', validators=[DataRequired(message)])
@@ -18,6 +30,15 @@ class RegisterForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class LoginForm(FlaskForm):
+    """
+    A class that extends `FlaskForm` and defines the login form.
+    
+    Properties:
+    - email: The user's email address.
+    - password: The user's password.
+    - submit: The submit input
+    """
+        
     message = "Incorrect email or password"
     email = StringField('email', validators=[DataRequired(message), Email()])
     password = StringField('password', validators=[DataRequired(message)])
