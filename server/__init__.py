@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 from datetime import timedelta
 
 db = SQLAlchemy()
@@ -11,6 +12,7 @@ def create_app():
     app.config['WTF_CSRF_ENABLED'] = False
     app.secret_key = 'SECRET KEY'
     app.permanent_session_lifetime = timedelta(days=5)
+    CORS(app)
 
     db.init_app(app)
 
