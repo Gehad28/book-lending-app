@@ -23,3 +23,11 @@ input {
     border-style: solid;
 }
 
+form p {
+    text-align: center;
+    font-size: 0.6em;
+}
+
+.link {
+    text-decoration: none;
+}
