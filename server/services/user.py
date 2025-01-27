@@ -106,13 +106,17 @@ class User(db.Model):
         Return: A JSON response containing the status of the user fetching with the user in case of success.
         """
         
-        return jsonify({'user': to_dict(User.query.get(user_id))}), 200
+        user = User.query.get(user_id)
+        if user:
+            return jsonify({'user': to_dict(user)}), 200
+        else:
+            return jsonify({'error': "User not found"}), 400
     
     def get_all_users():
         """
         Fetching all users.
         
-        Return: A JSON response containing the status of the users fetching with the users list in case of success.
+        Return: A JSON response containing the users list.
         """
         
         users = User.query.all()
