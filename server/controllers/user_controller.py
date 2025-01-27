@@ -3,7 +3,7 @@ from server.services.user import User
 
 user_api = Blueprint('user', __name__, url_prefix='/user')
 
-@user_api.route('/add-user', methods=['POST'])
+@user_api.route('/register', methods=['POST'])
 def add_user():
     data = request.form.to_dict()
     new_user = User(data['f_name'], data['l_name'], data['email'], data['password'], data['phone'])

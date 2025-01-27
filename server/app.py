@@ -12,5 +12,11 @@ app.permanent_session_lifetime = timedelta(days=5)
 
 db.init_app(app)
 
+with app.app_context():
+    from server.controllers.user_controller import user_api  # Import routes here
+    from server.controllers.auth import auth
+    app.register_blueprint(user_api)
+    app.register_blueprint(auth)
+
 if __name__ == "__main__":
     app.run(debug=True)
