@@ -1,7 +1,9 @@
+@import url('style.css');
+
 .container {
-    border: 1px solid grey;
+    border: 1px solid var(--border-color);
     border-radius: 1rem;
-    padding: 2rem;
+    padding: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -21,6 +23,16 @@ input {
     border-radius: 0.5rem;
     border-width: 1px;
     border-style: solid;
+    border-color: var(--border-color);
+}
+
+input[type="submit"] {
+    background-color: transparent;
+    cursor: pointer;
+}
+
+input[type="submit"]:active {
+    background-color: var(--third-color);
 }
 
 form p {
@@ -30,4 +42,5 @@ form p {
 
 .link {
     text-decoration: none;
+    color: var(--main-color);
 }
