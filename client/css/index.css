@@ -1,34 +1,13 @@
 @import url('style.css');
 
-header {
-    padding: 1rem 5rem 0 5rem;
-}
-
-nav {
-    display: flex;
-}
-
-nav span {
-    margin-right: auto;
-    font-weight: 700;
-}
-
-nav ul {
-    display: flex;
-    gap: 1rem;
-    list-style: none;
-}
-
-ul a {
-    text-decoration: none;
-    color: black;
-    font-size: 1rem;
-}
-
 .main-section {
     width: 50%;
 }
 
 h1 {
     text-align: center;
+}
+
+nav svg {
+    width: 1.2rem;
 }
