@@ -24,6 +24,8 @@ class User(db.Model):
     - get_all_users()
     """
     
+    __tablename__ = 'user'
+
     user_id = db.Column(db.Integer, primary_key=True)
     f_name = db.Column(db.String(255), nullable=False)
     l_name = db.Column(db.String(255), nullable=False)
@@ -31,6 +33,8 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     phone = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+
+    book = db.relationship('Book', back_populates='owner', foreign_keys="Book.owner_id")
     
     def __init__(self, f_name, l_name, email, password, phone):
         self.f_name = f_name
@@ -90,7 +94,7 @@ class User(db.Model):
         Return: A JSON response containing the status of the user deletion.
         """
         
-        user_to_delete = User.query.get_or_404(user_id)
+        user_to_delete = User.query.get_or_404(user_id) #########################################
         if user_to_delete:
             db.session.delete(user_to_delete)
             db.session.commit()

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, FileField
 from wtforms.validators import DataRequired, Email, Length, Regexp
 
 class RegisterForm(FlaskForm):
@@ -42,4 +42,11 @@ class LoginForm(FlaskForm):
     message = "Incorrect email or password"
     email = StringField('email', validators=[DataRequired(message), Email()])
     password = PasswordField('password', validators=[DataRequired(message)])
+    submit = SubmitField('Submit')
+
+class BookForm(FlaskForm):
+    message = "This field is required"
+    title = StringField('title', validators=[DataRequired(message)])
+    author = StringField('author', validators=[DataRequired(message)])
+    # image = FileField('image', validators=[DataRequired(message), Regexp('^.*\.(jpg|jpeg|png)$', message="Invalid File extention")])
     submit = SubmitField('Submit')

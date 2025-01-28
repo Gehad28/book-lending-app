@@ -19,7 +19,9 @@ def create_app():
     with app.app_context():
         from server.controllers.user_controller import user_api  # Import routes here
         from server.controllers.auth import auth
+        from server.controllers.book_controller import book_api
         app.register_blueprint(user_api)
         app.register_blueprint(auth)
+        app.register_blueprint(book_api)
 
     return app
