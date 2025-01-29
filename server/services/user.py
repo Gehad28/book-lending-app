@@ -1,7 +1,7 @@
 from server import db
 from sqlalchemy.sql import func
 from server.forms import RegisterForm
-from flask import jsonify
+from flask import jsonify, session
 from server.helper import to_dict
 
 class User(db.Model):
@@ -60,7 +60,7 @@ class User(db.Model):
         else:
             return jsonify({'errors': form.errors}), 400
 
-    def update_user(self, user_id):
+    def update_user(self, form_data):
         """
         Update an existing user in the databse
         
@@ -68,22 +68,20 @@ class User(db.Model):
         `user_id` -- The ID of the user to be updated
         Return: A JSON response containing the status of the user updating with the updated user in case of success.
         """
-        
+        form = RegisterForm(form_data)
+        user_id = session['user']['user_id']
         user_to_update = User.query.get(user_id)
-        if user_to_update:
-            if not self.f_name or not self.email or not self.password or not self.phone:
-                raise ValueError("Complete required fields")
-            else:
-                user_to_update.f_name = self.f_name
-                user_to_update.l_name = self.l_name
-                user_to_update.email = self.email
-                user_to_update.password = self.password
-                user_to_update.phone = self.phone
+        if form.validate_on_submit():
+                user_to_update.f_name = form.f_name.data
+                user_to_update.l_name = form.l_name.data
+                user_to_update.email = form.email.data
+                user_to_update.password = form.password.data
+                user_to_update.phone = form.phone.data
 
                 db.session.add(user_to_update)
                 db.session.commit()
-                return user_to_update
-        return "User not found"
+                return jsonify({'updated_user': to_dict(user_to_update)}), 200
+        return jsonify({'error': "User not found"}), 400
 
     def delete_user(user_id):
         """
