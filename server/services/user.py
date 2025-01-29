@@ -29,10 +29,10 @@ class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True)
     f_name = db.Column(db.String(255), nullable=False)
     l_name = db.Column(db.String(255), nullable=False)
-    email = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
     phone = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    created_at = db.Column(db.DateTime(timezone=True), default=func.now(), onupdate=func.now())
 
     book = db.relationship('Book', back_populates='owner', foreign_keys="Book.owner_id")
     
@@ -42,6 +42,7 @@ class User(db.Model):
         self.email = email
         self.password = password
         self.phone = phone
+        self.created_at 
 
     def add_user(self, form_data):
         """

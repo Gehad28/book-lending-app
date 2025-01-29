@@ -15,7 +15,7 @@ class Book(db.Model):
     is_borrowed = db.Column(db.Boolean, default=False, nullable=False)
     borrowed_by = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
-    borrowed_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
+    borrowed_at = db.Column(db.DateTime(timezone=True), default=func.now(), onupdate=func.now())
     
     owner = db.relationship('User', back_populates='book', foreign_keys=[owner_id])
     borrower = db.relationship('User', foreign_keys=[borrowed_by])
@@ -36,7 +36,16 @@ class Book(db.Model):
         else:
             return jsonify({'errors': form.errors}), 400
         
-    def update_book(self, form_data):
+    def update_book(self, form_data, image, book_id):
+        # form = BookForm(form_data)
+        # if form.validate_on_submit():
+        #     book = Book.query.get(book_id)
+        #     filename, file_path = upload(image)
+        #     book.title = form.title.data
+        #     book.author = form.author.data
+        #     book.image_path = file_path
+        #     db.session.add(book)
+        #     db.session.commit()
         pass
 
     def set_as_borrowed(book_id):

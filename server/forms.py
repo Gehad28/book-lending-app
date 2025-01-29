@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, FileField
-from wtforms.validators import DataRequired, Email, Length, Regexp
+from wtforms.validators import DataRequired, Email, Length, Regexp, ValidationError
 
 class RegisterForm(FlaskForm):
     """
@@ -28,6 +28,11 @@ class RegisterForm(FlaskForm):
     # ?: Means optional
     # $: Ensures the ending of the string
     submit = SubmitField('Submit')
+
+    def validate_email(self, field):
+        from server.services.user import User
+        if User.query.filter_by(email=field.data).first():
+            raise ValidationError("Email already exists")
 
 class LoginForm(FlaskForm):
     """
