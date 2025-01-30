@@ -90,4 +90,4 @@ class Book(db.Model):
         books = []
         for book in all_books:
             books.append(book_to_dict(book))
-        return jsonify({'books': books}), 200
+        return jsonify({'books': books, 'user_id': session.get('user')['user_id']}), 200

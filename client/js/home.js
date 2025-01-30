@@ -1,3 +1,29 @@
+window.onload = async () => {
+    const res = await fetch("http://127.0.0.1:5000/auth/is_logged_in", { credentials: 'include' });
+    const data = await res.json();
+    if (!data.logged_in) {
+        window.location.href = "../pages/login.html";
+    }
+    else {
+        document.body.style.display = "block";
+        getBooks();
+    }
+}
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+logoutBtn.addEventListener("click", () => {
+    fetch("http://127.0.0.1:5000/auth/logout", { credentials: 'include' })
+    .then(request => request.json())
+    .then(response => {
+        console.log(response);
+        if (!response.logged_in) {
+            window.location.href = "../pages/login.html";
+        }
+    });
+})
+
+
 const bookForm = document.getElementById("bookForm");
 const message = document.getElementById("message");
 
@@ -25,8 +51,8 @@ bookForm.addEventListener("submit", (e) => {
 
 const booksList = document.getElementById("books-list");
 
-const addBookItems = (books) => {
-    books.forEach((book, index) => {
+const addBookItems = (data) => {
+    data.books.forEach((book, index) => {
         const bookElement = document.createElement("li");
         bookElement.id = index;
         bookElement.classList.add("book-item");
@@ -45,13 +71,26 @@ const addBookItems = (books) => {
         const image = document.createElement("img");
         image.src = `http://127.0.0.1:5000/${book.image_path}`;
 
-        const borrowBtn = document.createElement("button");
-        borrowBtn.innerText = "Borrow";
-        borrowBtn.classList.add("borrow-btn");
-
         bookElement.appendChild(image);
         bookElement.appendChild(container);
-        bookElement.appendChild(borrowBtn);
+
+        if (data.user_id == book.owner_id) {
+            const editBtn = document.createElement("button");
+            editBtn.innerText = "Edit";
+            editBtn.classList.add("edit-btn");
+            bookElement.appendChild(editBtn);
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.innerText = "Delete";
+            deleteBtn.classList.add("delete-btn");
+            bookElement.appendChild(deleteBtn);
+        }
+        else {
+            const borrowBtn = document.createElement("button");
+            borrowBtn.innerText = "Borrow";
+            borrowBtn.classList.add("borrow-btn");
+            bookElement.appendChild(borrowBtn);
+        }
 
         booksList.appendChild(bookElement);
     });
@@ -67,11 +106,11 @@ const getBooks = () => {
     })
     .then(data => {
         console.log(data);
-        addBookItems(data.books);
+        addBookItems(data);
     })
     .then(error => console.log(error));
 }
 
-window.onload = () => {
-    getBooks();
-}
+// window.onload = () => {
+//     getBooks();
+// }
