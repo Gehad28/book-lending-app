@@ -1,7 +1,7 @@
 from server import db
 from sqlalchemy.sql import func
 from server.forms import BookForm
-from flask import jsonify, request
+from flask import jsonify, request, session
 from server.helper import book_to_dict, upload
 from server.services.user import User
 
@@ -20,19 +20,23 @@ class Book(db.Model):
     owner = db.relationship('User', back_populates='book', foreign_keys=[owner_id])
     borrower = db.relationship('User', foreign_keys=[borrowed_by])
 
-    def __init__(self, title, author, owner_id):
+    def __init__(self, title, author):
         self.title = title
         self.author = author
-        self.owner_id = owner_id
+        # self.owner_id = owner_id
 
     def create_book(self, form_data, image):
         form = BookForm(form_data)
         if form.validate_on_submit():
             filename, file_path = upload(image)
             self.image_path = file_path
-            db.session.add(self)
-            db.session.commit()
-            return jsonify({'book': book_to_dict(self)}), 200
+            if 'user' in session:
+                user = session['user']
+                self.owner_id = user['user_id']
+                db.session.add(self)
+                db.session.commit()
+                return jsonify({'book': book_to_dict(self), 'message': "Book added successfully"}), 200
+            return jsonify({'error': "Not authorized"}), 401
         else:
             return jsonify({'errors': form.errors}), 400
         

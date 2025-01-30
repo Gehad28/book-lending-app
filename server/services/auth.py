@@ -32,6 +32,7 @@ class Authentication():
             user = User.query.filter_by(email=form.email.data).first()
             if user and form.password.data == user.password:
                 session['user'] = to_dict(user)
+                print(session)
                 return jsonify({'user': to_dict(user)}), 200
             else:
                 return jsonify({'error': "Incorrect email or password"}), 400

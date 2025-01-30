@@ -6,7 +6,7 @@ window.onload = function() {
     .then(response => {
         console.log(response);
         if (response.logged_in) {
-            window.location.href = "../pages/index.html";
+            window.location.href = "../pages/home.html";
         }
     });
 }
@@ -14,6 +14,7 @@ window.onload = function() {
 const login = (formData) => {
     fetch("http://127.0.0.1:5000/auth/login", {
         method: 'POST',
+        credentials: "include",
         body: formData
     }).then((request) => {
         if (!request.ok) {
@@ -23,8 +24,8 @@ const login = (formData) => {
 
         return request.json();
     }).then((data) => {
-        console.log(data);
-        window.location.href = "../pages/index.html";
+        console.log(data)
+        window.location.href = "../pages/home.html";
     });
 }
 

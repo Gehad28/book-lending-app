@@ -6,6 +6,7 @@
     <title>Home</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/home.css">
 </head>
 <body>
     <header>
@@ -31,6 +32,22 @@
                 lend, borrow, and connect!
             </h1>
         </div>
+        <div class="book-form-container">
+            <h4>Add a book</h4>
+            <p id="message"></p>
+            <form id="bookForm">
+                <label for="title" hidden>Title</label>
+                <input type="text" id="title" name="title" placeholder="Book Title..">
+                <label for="author" hidden>Author</label>
+                <input type="text" id="author" name="author" placeholder="Book Author..">
+                <label for="image" hidden>Iamge</label>
+                <input type="file" name="image" id="image">
+    
+                <input type="submit" value="Add">
+            </form>
+        </div>
     </section>
+    
+    <script src="../js/home.js"></script>
 </body>
 </html>

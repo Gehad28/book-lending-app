@@ -5,9 +5,9 @@ book_api = Blueprint('book', __name__, url_prefix='/book')
 
 @book_api.route('/add-book', methods=['POST'])
 def add_book():
+    # if request.method == 'POST':
     data = request.form.to_dict()
-    user = session['user']
-    new_book = Book(data['title'], data['author'], user['user_id'])
+    new_book = Book(data['title'], data['author'])
     return new_book.create_book(request.form, request.files['image'])
 
 def update_book():

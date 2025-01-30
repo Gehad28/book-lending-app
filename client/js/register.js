@@ -3,6 +3,7 @@ const registerForm = document.getElementById("registerForm");
 const register = (formData) => {
     fetch("http://127.0.0.1:5000/user/register", {
         method: 'POST',
+        credentials: "include",
         body: formData
     }).then(request => {
         if (!request.ok) {
@@ -11,7 +12,6 @@ const register = (formData) => {
         }
         return request.json();
     }).then(data => {
-        console.log(data);
         window.location.href = "../pages/index.html";
     });
 }
