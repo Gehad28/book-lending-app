@@ -19,3 +19,34 @@
     font-size: 0.6em;
     color: green;
 }
+
+.books-container {
+    text-align: center;
+}
+
+.books-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    padding: 2rem;
+}
+
+.books-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.books-list li .info {
+    display: flex;
+    flex-direction: column;
+}
+
+.book-item img {
+    width: 250px;
+    height: 300px;
+}
