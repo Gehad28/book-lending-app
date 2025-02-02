@@ -1,6 +1,6 @@
 from server import db
 from sqlalchemy.sql import func
-from server.forms import BookForm
+from server.forms import BookForm, UpdateBookForm
 from flask import jsonify, request, session
 from server.helper import book_to_dict, upload
 from server.services.user import User
@@ -40,17 +40,19 @@ class Book(db.Model):
         else:
             return jsonify({'errors': form.errors}), 400
         
-    def update_book(self, form_data, image, book_id):
-        # form = BookForm(form_data)
-        # if form.validate_on_submit():
-        #     book = Book.query.get(book_id)
-        #     filename, file_path = upload(image)
-        #     book.title = form.title.data
-        #     book.author = form.author.data
-        #     book.image_path = file_path
-        #     db.session.add(book)
-        #     db.session.commit()
-        pass
+    def update_book(form_data, image):
+        form = UpdateBookForm(form_data)
+        if form.validate_on_submit():
+            book = Book.query.get(request.args.get("book_id"))
+            if (image):
+                filename, file_path = upload(image)
+                book.image_path = file_path
+            book.title = form.title_up.data        # Already set in Book(data['title']) !!!!!!
+            book.author = form.author_up.data
+            db.session.add(book)
+            db.session.commit()
+            return jsonify({'book': book_to_dict(book), 'message': "Book updated successfully"}), 200
+        return jsonify({'errors': form.errors})
 
     def set_as_borrowed(book_id):
         book = Book.query.get(book_id)

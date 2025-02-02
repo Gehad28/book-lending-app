@@ -50,14 +50,23 @@
         <div class="books-container">
             <h4>Borrow a book</h4>
             <ul id="books-list" class="books-list">
-                <li>
-                    <img src="" alt="">
-                    <div class="info">
-                        <p></p>
-                    </div>
-                </li>
             </ul>
         </div>
+    </section>
+
+    <div class="overlay"></div>
+    <section class="form-popup">
+        <h3>Edit Your Book</h3>
+        <form id="editForm">
+            <label for="title-up" hidden>Title</label>
+            <input type="text" id="title_up" name="title_up" placeholder="Book Title..">
+            <label for="author-up" hidden>Author</label>
+            <input type="text" id="author_up" name="author_up" placeholder="Book Author..">
+            <label for="image-up" class="custom-file-label">Update Image</label>
+            <input type="file" name="image_up" id="image_up" class="custom-file-input">
+
+            <input type="submit" value="Edit">
+        </form>
     </section>
     
     <script src="../js/home.js"></script>

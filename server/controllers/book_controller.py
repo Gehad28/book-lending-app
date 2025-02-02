@@ -10,8 +10,9 @@ def add_book():
     new_book = Book(data['title'], data['author'])
     return new_book.create_book(request.form, request.files['image'])
 
+@book_api.route('/update-book', methods=['POST'])
 def update_book():
-    pass
+    return Book.update_book(request.form, request.files['image_up'])
 
 @book_api.route('/set-as-borrowed')
 def set_as_borrowed():
