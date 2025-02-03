@@ -24,7 +24,7 @@ const login = (formData) => {
 
         return request.json();
     }).then((data) => {
-        console.log(data)
+        localStorage.setItem("user", JSON.stringify(data.user));
         window.location.href = "../pages/home.html";
     });
 }

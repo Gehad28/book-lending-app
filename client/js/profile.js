@@ -31,7 +31,7 @@ notificationsOption.addEventListener("click", () => {
 });
 
 settingsOption.addEventListener("click", () => {
-    displayConent(settingsOption, contentBooks);
+    displayConent(settingsOption, contentSettings);
     hideContent([booksOption, notificationsOption], [contentBooks, contentNotifications]);
 });
 
@@ -217,3 +217,31 @@ const getNotifications = () => {
     })
     .then(error => console.log(error));
 }
+
+const settings = () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const fName = document.getElementById("f_name");
+    const lName = document.getElementById("l_name");
+    const email = document.getElementById("email");
+    const phone = document.getElementById("phone");
+
+    fName.innerText = user['f_name'];
+    lName.innerText = user['l_name'];
+    email.innerText = user['email'];
+    phone.innerText = user['phone'];
+}
+
+settings();
+
+const logoutBtn = document.getElementById("logoutBtn");
+
+logoutBtn.addEventListener("click", () => {
+    fetch("http://127.0.0.1:5000/auth/logout", { credentials: 'include' })
+    .then(request => request.json())
+    .then(response => {
+        console.log(response);
+        if (!response.logged_in) {
+            window.location.href = "../pages/login.html";
+        }
+    });
+})
