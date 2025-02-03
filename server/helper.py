@@ -32,6 +32,16 @@ def book_to_dict(book):
         'borrowd_by': book.borrowed_by
     }
 
+def notification_to_dict(notification):
+    return {
+        'id': notification.id,
+        'book_id': notification.book_id,
+        'message': notification.message,
+        'status': notification.status,
+        'owner_id': notification.owner_id,
+        'borrowd_id': notification.borrower_id
+    }
+
 def upload(file):
     filename = secure_filename(file.filename)
     file.save(os.path.join(UPLOAD_FOLDER, filename))

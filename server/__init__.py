@@ -20,8 +20,10 @@ def create_app():
         from server.controllers.user_controller import user_api  # Import routes here
         from server.controllers.auth import auth
         from server.controllers.book_controller import book_api
+        from server.controllers.notification_controller import not_api
         app.register_blueprint(user_api)
         app.register_blueprint(auth)
         app.register_blueprint(book_api)
+        app.register_blueprint(not_api)
 
     return app
