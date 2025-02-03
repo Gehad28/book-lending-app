@@ -54,10 +54,10 @@ class Book(db.Model):
             return jsonify({'book': book_to_dict(book), 'message': "Book updated successfully"}), 200
         return jsonify({'errors': form.errors})
 
-    def set_as_borrowed(book_id):
+    def set_as_borrowed(book_id, flag):
         book = Book.query.get(book_id)
         if book:
-            book.is_borrowed = True
+            book.is_borrowed = flag
             db.session.add(book)
             db.session.commit()
             return jsonify({'message': "Book set to borrowed"}), 200
@@ -88,7 +88,8 @@ class Book(db.Model):
         return jsonify({'error': "User not found"}), 400 
     
     def get_available_books():
-        all_books = Book.query.filter_by(is_borrowed=False).all()
+        user_id = session['user']['user_id']
+        all_books = Book.query.filter(Book.is_borrowed == False, Book.owner_id != user_id).all()
         books = []
         for book in all_books:
             books.append(book_to_dict(book))

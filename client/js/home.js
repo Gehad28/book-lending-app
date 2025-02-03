@@ -105,32 +105,6 @@ const updateBook = (formData, id) => {
     .then(error => console.log(error));
 }
 
-const handleUpdate = (book) => {
-    const container = document.querySelector(".form-popup");
-    const overlay = document.querySelector(".overlay");
-    container.style.display = "block";
-    overlay.style.display = "block";
-    overlay.addEventListener("click", () => {
-        container.style.display = "none";
-        overlay.style.display = "none";
-    });
-    setUpdateForm(book);
-}
-
-const handleDelete = (id, bookElement) => {
-    fetch(`http://127.0.0.1:5000/book/delete-book?book_id=${id}`, {
-        method: 'GET',
-        credentials: 'include'
-    })
-    .then(response => {
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        bookElement.remove();
-    })
-    .then(error => console.log(error));
-}
 
 const handleBorrow = (book) => {
     fetch(`http://127.0.0.1:5000/notification/send-notification?owner_id=${book.owner_id}&book_id=${book.book_id}`, {
@@ -168,26 +142,9 @@ const addBookItems = (data) => {
 
         bookElement.appendChild(image);
         bookElement.appendChild(container);
-
-        if (data.user_id == book.owner_id) {
-            const btns = document.createElement("div");
-            btns.classList.add("action-btns");
-            const editBtn = createBtn("Edit", "edit-btn", "edit-btn");
-            editBtn.addEventListener("click", () => handleUpdate(book));
-            btns.appendChild(editBtn);
-
-            const deleteBtn = createBtn(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z"/></svg>`,
-                                        "delete-btn", "delete-btn");
-            deleteBtn.addEventListener("click", () => handleDelete(book.book_id, bookElement));
-            btns.appendChild(deleteBtn);
-            bookElement.appendChild(btns);
-        }
-        else {
-            const borrowBtn = createBtn("Borrow", "borrow-btn", "borrow-btn");
-            borrowBtn.addEventListener("click", () => handleBorrow(book));
-            bookElement.appendChild(borrowBtn);
-        }
-
+        const borrowBtn = createBtn("Borrow", "borrow-btn", "borrow-btn");
+        borrowBtn.addEventListener("click", () => handleBorrow(book));
+        bookElement.appendChild(borrowBtn);
         booksList.appendChild(bookElement);
     });
 }

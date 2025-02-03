@@ -14,10 +14,11 @@ def add_book():
 def update_book():
     return Book.update_book(request.form, request.files['image_up'])
 
-@book_api.route('/set-as-borrowed')
+@book_api.route('/set-as-borrowed', methods=['POST'])
 def set_as_borrowed():
     book_id = request.args.get('book_id')
-    return Book.set_as_borrowed(book_id)
+    flag = request.args.get('flag', 'false').lower() in ['true', '1']
+    return Book.set_as_borrowed(book_id, flag)
 
 @book_api.route('/delete-book')
 def delete_book():

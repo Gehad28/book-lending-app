@@ -134,6 +134,38 @@ const handleDelete = (id, bookElement) => {
     .then(error => console.log(error));
 }
 
+const handleBorrowing = (book, btn) => {
+    if (btn.innerText == "Set as Borrowed") {
+        fetch(`http://127.0.0.1:5000/book/set-as-borrowed?book_id=${book.book_id}&flag=${true}`, {
+            method: 'POST',
+            credentials: 'include'
+        })
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            btn.innerText = "Make Available";
+            console.log(btn.innerText);
+        })
+        .then(error => console.log(error));
+    }
+    else {
+        fetch(`http://127.0.0.1:5000/book/set-as-borrowed?book_id=${book.book_id}&flag=${false}`, {
+            method: 'POST',
+            credentials: 'include'
+        })
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            btn.innerText = "Set as Borrowed";
+        })
+        .then(error => console.log(error));
+    }
+}
+
 const addBookItems = (books) => {
     books.forEach((book, index) => {
         const bookElement = document.createElement("li");
@@ -167,7 +199,12 @@ const addBookItems = (books) => {
                                     "delete-btn", "delete-btn");
         deleteBtn.addEventListener("click", () => handleDelete(book.book_id, bookElement));
         btns.appendChild(deleteBtn);
+        
+        const text = book.is_borrowed ? "Make Available" : "Set as Borrowed";
+        const setBorrowd = createBtn(text, "set-borrow-btn", "set-borrow-btn");
+        setBorrowd.addEventListener("click", () => handleBorrowing(book, setBorrowd));
         bookElement.appendChild(btns);
+        bookElement.appendChild(setBorrowd);
 
         booksList.appendChild(bookElement);
     });
