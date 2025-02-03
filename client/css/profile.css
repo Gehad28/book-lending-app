@@ -14,6 +14,7 @@
 
 .sidebar li {
     padding: 0 0.8rem;
+    cursor: pointer;
 }
 
 .sidebar .active {
@@ -115,4 +116,17 @@
     cursor: pointer;
     font-size: 0.6em;
     text-align: start;
+}
+
+.content-notifications {
+    display: none;
+}
+
+.notification-item:not(:last-child) {
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 0;
+}
+
+.notification-message {
+    font-size: 0.8em;
 }

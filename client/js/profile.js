@@ -1,4 +1,42 @@
+const booksOption = document.getElementById("books");
+const notificationsOption = document.getElementById("notifications");
+const settingsOption = document.getElementById("settings");
+const contentBooks = document.getElementById("content-books");
+const contentNotifications = document.getElementById("content-notifications");
+const contentSettings = document.getElementById("content-settings");
+
+const displayConent = (activeTab, element) => {
+    activeTab.classList.add("active");
+    element.style.display = "block";
+}
+
+const hideContent = (tabs, elements) => {
+    tabs.forEach(tab => {
+        tab.classList.remove("active");
+    });
+
+    elements.forEach(element => {
+        element.style.display = "none";
+    });
+}
+
+booksOption.addEventListener("click", () => {
+    displayConent(booksOption, contentBooks);
+    hideContent([notificationsOption, settingsOption], [contentNotifications, contentSettings]);
+});
+
+notificationsOption.addEventListener("click", () => {
+    displayConent(notificationsOption, contentNotifications);
+    hideContent([booksOption, settingsOption], [contentBooks, contentSettings]);
+});
+
+settingsOption.addEventListener("click", () => {
+    displayConent(settingsOption, contentBooks);
+    hideContent([booksOption, notificationsOption], [contentBooks, contentNotifications]);
+});
+
 const booksList = document.getElementById("books-list");
+const notificationsList = document.getElementById("notifications-list");
 
 window.onload = async () => {
     const res = await fetch("http://127.0.0.1:5000/auth/is_logged_in", { credentials: 'include' });
@@ -9,6 +47,13 @@ window.onload = async () => {
     else {
         document.body.style.display = "block";
         getBooks();
+        getNotifications();
+    }
+
+    const ulrParams = new URLSearchParams(window.location.search);
+    if (ulrParams.get("notifications") == "true") {
+        displayConent(notificationsOption, contentNotifications);
+        hideContent([booksOption, settingsOption], [contentBooks, contentSettings]);
     }
 }
 
@@ -89,8 +134,8 @@ const handleDelete = (id, bookElement) => {
     .then(error => console.log(error));
 }
 
-const addBookItems = (data) => {
-    data.books.forEach((book, index) => {
+const addBookItems = (books) => {
+    books.forEach((book, index) => {
         const bookElement = document.createElement("li");
         bookElement.id = index;
         bookElement.classList.add("book-item");
@@ -138,7 +183,37 @@ const getBooks = () => {
     })
     .then(data => {
         console.log(data);
-        addBookItems(data);
+        addBookItems(data.books);
+    })
+    .then(error => console.log(error));
+}
+
+const addNotificationItems = (notifications) => {
+    notifications.forEach(notification => {
+        const notificationElement = document.createElement("li");
+        notificationElement.id = notification.id;
+        notificationElement.classList.add("notification-item");
+
+        const message = document.createElement("p");
+        message.classList.add("notification-message");
+        message.innerText = notification.message;
+
+        notificationElement.appendChild(message);
+        notificationsList.appendChild(notificationElement);
+    });
+}
+
+const getNotifications = () => {
+    fetch("http://127.0.0.1:5000/notification/get-notifications", {
+        method: 'GET',
+        credentials: 'include'
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        addNotificationItems(data.notifications);
     })
     .then(error => console.log(error));
 }
