@@ -7,6 +7,7 @@ window.onload = async () => {
     else {
         document.body.style.display = "block";
         getBooks();
+        getNotifications();
     }
 }
 
@@ -132,6 +133,20 @@ const handleDelete = (id, bookElement) => {
     .then(error => console.log(error));
 }
 
+const handleBorrow = (book) => {
+    fetch(`http://127.0.0.1:5000/notification/send-notification?owner_id=${book.owner_id}&book_id=${book.book_id}`, {
+        method: 'POST',
+        credentials: 'include'
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .then(error => console.log(error));
+}
+
 const addBookItems = (data) => {
     data.books.forEach((book, index) => {
         const bookElement = document.createElement("li");
@@ -170,6 +185,7 @@ const addBookItems = (data) => {
         }
         else {
             const borrowBtn = createBtn("Borrow", "borrow-btn", "borrow-btn");
+            borrowBtn.addEventListener("click", () => handleBorrow(book));
             bookElement.appendChild(borrowBtn);
         }
 
@@ -188,6 +204,20 @@ const getBooks = () => {
     .then(data => {
         console.log(data);
         addBookItems(data);
+    })
+    .then(error => console.log(error));
+}
+
+const getNotifications = () => {
+    fetch("http://127.0.0.1:5000/notification/get-notifications", {
+        method: 'GET',
+        credentials: 'include'
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
     })
     .then(error => console.log(error));
 }
