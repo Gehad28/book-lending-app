@@ -4,7 +4,6 @@ window.onload = function() {
     fetch("http://127.0.0.1:5000/auth/is_logged_in", { credentials: 'include' })
     .then(request => request.json())
     .then(response => {
-        console.log(response);
         if (response.logged_in) {
             window.location.href = "../pages/home.html";
         }
@@ -18,7 +17,6 @@ const login = (formData) => {
         body: formData
     }).then((request) => {
         if (!request.ok) {
-            console.log("Something went wrong!", request);
             return null;
         }
 
