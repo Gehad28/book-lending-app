@@ -20,7 +20,7 @@ def register():
     
     data = request.form.to_dict()
     new_user = User(data['f_name'], data['l_name'], data['email'], data['password'], data['phone'])
-    return new_user.add_user(request.form)
+    return new_user.add_user(request.form, request.files['profile_image'])
 
 @user_api.route('/update-user', methods=['POST'])
 def update_user():
@@ -39,7 +39,7 @@ def update_user():
     
     data = request.form.to_dict()
     updated_user = User(data['f_name'], data['l_name'], data['email'], data['password'], data['phone'])
-    return updated_user.update_user(request.form)
+    return updated_user.update_user(request.form, request.files['profile_image'])
 
 @user_api.route('/delete-user', methods=['GET'])
 def delete_user():

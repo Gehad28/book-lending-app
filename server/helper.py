@@ -18,7 +18,8 @@ def to_dict(user):
         'l_name': user.l_name,
         'email': user.email,
         'password': user.password,
-        'phone': user.phone
+        'phone': user.phone,
+        'image_path': user.image_path
     }
 
 def book_to_dict(book):

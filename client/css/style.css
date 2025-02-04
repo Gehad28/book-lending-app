@@ -108,3 +108,9 @@ input[type="submit"] {
 input[type="submit"]:active {
     background-color: var(--third-color);
 }
+
+.profile_image {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+}

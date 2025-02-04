@@ -151,11 +151,12 @@ const createBorrowBtn = (book) => {
 
 const createUserInfo = (book) => {
     const info = createElement("div", "user-info", undefined, undefined);
-    // const image = document.createElement("img");
-    // image.src = `http://127.0.0.1:5000/${book.owner.image_path}`;
+    const image = document.createElement("img");
+    image.classList.add("profile_image");
+    image.src = `http://127.0.0.1:5000/${book.owner.image_path}`;
     const FName = createElement("p", "user-name", undefined, book.owner.f_name);
     const LName = createElement("p", "user-name", undefined, book.owner.l_name);
-    info.append(FName, LName);
+    info.append(FName, LName, image);
     return info;
 }
 
@@ -163,6 +164,7 @@ const createBookElement = (book, index) => {
     const bookElement = createElement("li", "book-item", index, undefined);
 
     const image = document.createElement("img");
+    image.classList.add("book_image");
     image.src = `http://127.0.0.1:5000/${book.image_path}`;
 
     const infoContainer = createInfoContainer(book);

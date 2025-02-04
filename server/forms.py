@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, FileField, BooleanField
 from wtforms.validators import DataRequired, Email, Length, Regexp, ValidationError
+from flask import session
 
 class RegisterForm(FlaskForm):
     """
@@ -31,7 +32,9 @@ class RegisterForm(FlaskForm):
 
     def validate_email(self, field):
         from server.services.user import User
-        if User.query.filter_by(email=field.data).first():
+        user = User.query.filter_by(email=field.data).first()
+        current_user_id = session['user']['user_id']
+        if user and user.user_id != current_user_id:
             raise ValidationError("Email already exists")
 
 class LoginForm(FlaskForm):
