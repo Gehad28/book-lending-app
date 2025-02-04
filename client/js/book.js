@@ -149,6 +149,16 @@ const createBorrowBtn = (book) => {
     return setBorrowd;
 }
 
+const createUserInfo = (book) => {
+    const info = createElement("div", "user-info", undefined, undefined);
+    // const image = document.createElement("img");
+    // image.src = `http://127.0.0.1:5000/${book.owner.image_path}`;
+    const FName = createElement("p", "user-name", undefined, book.owner.f_name);
+    const LName = createElement("p", "user-name", undefined, book.owner.l_name);
+    info.append(FName, LName);
+    return info;
+}
+
 const createBookElement = (book, index) => {
     const bookElement = createElement("li", "book-item", index, undefined);
 
@@ -164,6 +174,10 @@ const createBookElement = (book, index) => {
     if (book.owner_id == user_id) {
         const borrowBtn = createBorrowBtn(book);
         bookElement.appendChild(borrowBtn);
+    }
+    else {
+        const userInfo = createUserInfo(book);
+        bookElement.appendChild(userInfo);
     }
     return bookElement;
 }
