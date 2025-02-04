@@ -2,7 +2,7 @@ from server import db
 from sqlalchemy.sql import func
 from server.forms import BookForm, UpdateBookForm
 from flask import jsonify, request, session
-from server.helper import book_to_dict, upload
+from server.helper import book_to_dict, upload, to_dict
 from server.services.user import User
 
 class Book(db.Model):
@@ -73,17 +73,22 @@ class Book(db.Model):
     
     def get_book(book_id):
         book = Book.query.get(book_id)
+        owner = to_dict(book.owner)
+        book = book_to_dict(book)
+        book.update({'owner': owner})
         if book:
-            return jsonify({'book': book_to_dict(book)}), 200
+            return jsonify({'book': book}), 200
         return jsonify({'error': "Book not found"}), 400
     
-    def get_user_books(user_id):
-        user = User.query.get(user_id)
+    def get_user_books():
+        user = User.query.get(session['user']['user_id'])
         if user:
-            user_books = user.book      # Can be done by: Book.query.filter_by(user_id=user_id).all()
+            user_books = user.book  
             books = []
             for book in user_books:
-                books.append(book_to_dict(book))
+                book = book_to_dict(book)
+                book.update({'owner': to_dict(user)})
+                books.append(book)
             return jsonify({'books': books}), 200
         return jsonify({'error': "User not found"}), 400 
     
@@ -92,5 +97,8 @@ class Book(db.Model):
         all_books = Book.query.filter(Book.is_borrowed == False, Book.owner_id != user_id).all()
         books = []
         for book in all_books:
-            books.append(book_to_dict(book))
-        return jsonify({'books': books, 'user_id': session.get('user')['user_id']}), 200
+            owner = to_dict(book.owner)
+            book = book_to_dict(book)
+            book.update({'owner': owner})
+            books.append(book)
+        return jsonify({'books': books}), 200

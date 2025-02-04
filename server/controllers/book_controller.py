@@ -32,8 +32,7 @@ def get_book():
 
 @book_api.route('/get-user-books')
 def get_user_books():
-    user_id = session['user']['user_id']
-    return Book.get_user_books(user_id)
+    return Book.get_user_books()
 
 @book_api.route('/get-all-books')
 def get_available_books():
