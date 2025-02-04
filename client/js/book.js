@@ -1,4 +1,4 @@
-import { showpopup, createElement, createBtn } from "./utils.js";
+import { showpopup, hidepopup, createElement, createBtn } from "./utils.js";
 
 export function addBook(book, fun) {
     fetch("http://127.0.0.1:5000/book/add-book", {
@@ -172,13 +172,14 @@ const setUpdateForm = (book) => {
     }
 
     editForm.addEventListener("submit", (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         const formData = new FormData(editForm);
         const imageUpdatBtn = document.getElementById("image_up");
         if (imageUpdatBtn.files > 0) {
             formData.append("image_up", imageUpdatBtn.files[0]);
         }
         updateBook(formData, book.book_id);
+        hidepopup();
     });
 }
 

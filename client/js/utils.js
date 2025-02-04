@@ -33,15 +33,21 @@ export const hideContent = (tabs, elements) => {
     });
 }
 
-export const showpopup = () => {
+const popup = (display) => {
     const container = document.querySelector(".form-popup");
     const overlay = document.querySelector(".overlay");
-    container.style.display = "block";
-    overlay.style.display = "block";
-    overlay.addEventListener("click", () => {
-        container.style.display = "none";
-        overlay.style.display = "none";
-    });
+    container.style.display = display;
+    overlay.style.display = display;
+    if (display == "block")
+        overlay.addEventListener("click", () => popup("none"));
+}
+
+export const showpopup = () => {
+    popup("block");
+}
+
+export const hidepopup = () => {
+    popup("none");
 }
 
 export const createElement = (...args) => {
