@@ -11,6 +11,8 @@ export function addBook(book, fun) {
     })
     .then(data => {
         fun(data);
+        if (JSON.parse(localStorage.getItem('user')).user_id != data.book.owner_id)
+            createBookItem(data.book);
     })
     .then(error => console.log(error));
 }
@@ -163,8 +165,8 @@ const createUserInfo = (book) => {
     return info;
 }
 
-const createBookElement = (book, index) => {
-    const bookElement = createElement("li", "book-item", index, undefined);
+const createBookElement = (book) => {
+    const bookElement = createElement("li", "book-item", `book-${book.book_id}`, undefined);
 
     const image = document.createElement("img");
     image.classList.add("book_image");
@@ -228,11 +230,15 @@ const handleBorrowing = (book, btn) => {
     }
 }
 
+const createBookItem = (book) => {
+    const booksList = document.getElementById("books-list");
+    const bookElement = createBookElement(book);
+    booksList.appendChild(bookElement);
+}
+
 export const addBookItems = (data) => {
-    data.books.forEach((book, index) => {
-        const booksList = document.getElementById("books-list");
-        const bookElement = createBookElement(book, index);
-        booksList.appendChild(bookElement);
+    data.books.reverse().forEach((book) => {
+        createBookItem(book);
     });
 }
 
