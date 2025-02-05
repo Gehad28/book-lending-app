@@ -55,7 +55,8 @@ export const updateBook = (formData, id) => {
     })
     .then(data => {
         console.log(data);
-        // update book list
+        hidepopup();
+        updateBookCard(data.book);
     })
     .then(error => console.log(error));
 }
@@ -110,9 +111,11 @@ const makeAvailable = (book, btn) => {
 const createInfoContainer = (book) => {
     const title = document.createElement("p");
     title.innerText = book.title;
+    title.id = `title-${book.book_id}`;
 
     const author = document.createElement("p");
     author.innerText = book.author;
+    author.id = `author-${book.book_id}`;
 
     const container = document.createElement("div");
     container.classList.add("info");
@@ -165,10 +168,11 @@ const createBookElement = (book, index) => {
 
     const image = document.createElement("img");
     image.classList.add("book_image");
+    image.id = `image-${book.book_id}`;
     image.src = `http://127.0.0.1:5000/${book.image_path}`;
 
     const infoContainer = createInfoContainer(book);
-    const actionBtns = createActionBtns(book, bookElement);
+    const actionBtns = createActionBtns(book, bookElement, JSON.parse(localStorage.getItem('user')).user_id);
 
     bookElement.append(image, infoContainer, actionBtns);
 
@@ -207,7 +211,6 @@ const setUpdateForm = (book) => {
             formData.append("image_up", imageUpdatBtn.files[0]);
         }
         updateBook(formData, book.book_id);
-        hidepopup();
     });
 }
 
@@ -231,4 +234,14 @@ export const addBookItems = (data) => {
         const bookElement = createBookElement(book, index);
         booksList.appendChild(bookElement);
     });
+}
+
+const updateBookCard = (book) => {
+    const image = document.getElementById(`image-${book.book_id}`);
+    const title = document.getElementById(`title-${book.book_id}`);
+    const author = document.getElementById(`author-${book.book_id}`);
+
+    image.src = `http://127.0.0.1:5000/${book.image_path}`;
+    title.innerText = book.title;
+    author.innerText = book.author;
 }
