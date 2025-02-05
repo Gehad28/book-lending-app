@@ -1,4 +1,4 @@
-import { showpopup, hidepopup, createElement, createBtn } from "./utils.js";
+import { showpopup, hidepopup, createElement, createBtn, createEvent } from "./utils.js";
 import { deleteNotification } from "./notifications.js";
 
 export function addBook(book, fun) {
@@ -91,6 +91,7 @@ export const setAsBorrowed = (book_id, btn, notification_id, notificationEle) =>
         if (btn.id == "set-borrow-btn")
             btn.innerText = "Make Available";
         else {
+            createEvent("updateBtnText");   // Dispatch an event called updatebtnText to update the set as borrowed btn
             deleteNotification(notification_id, notificationEle);
         }
     })
@@ -108,6 +109,20 @@ const makeAvailable = (book, btn) => {
     .then(data => {
         console.log(data);
         btn.innerText = "Set as Borrowed";
+    })
+    .then(error => console.log(error));
+}
+
+export const refuseBorrowing = (book_id, notification_id, notificationEle) => {
+    fetch(`http://127.0.0.1:5000/book/set-as-borrowed?book_id=${book_id}&flag=${false}`, {
+        method: 'POST',
+        credentials: 'include'
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        deleteNotification(notification_id, notificationEle);
     })
     .then(error => console.log(error));
 }
@@ -146,7 +161,6 @@ const createActionBtns = (book, bookElement, user_id) => {
     }
     else {
         const borrowBtn = createBtn("Borrow", "borrow-btn", "borrow-btn");
-        console.log(book.book_id, book.borrow_req);
         borrowBtn.disabled = Boolean(book.borrow_req);
         borrowBtn.addEventListener("click", () => borrowBook(book, borrowBtn));
         return borrowBtn;
@@ -157,6 +171,7 @@ const createBorrowBtn = (book) => {
     const text = book.is_borrowed ? "Make Available" : "Set as Borrowed";
     const setBorrowd = createBtn(text, "set-borrow-btn", "set-borrow-btn");
     setBorrowd.addEventListener("click", () => handleBorrowing(book, setBorrowd));
+    document.addEventListener("updateBtnText", () => setBorrowd.innerText = "Make Available");
     return setBorrowd;
 }
 

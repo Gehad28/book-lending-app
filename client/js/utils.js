@@ -59,3 +59,8 @@ export const createElement = (...args) => {
         ele.innerText = args[3];
     return ele;
 }
+
+export const createEvent = (eventName) => {
+    const event = new CustomEvent(eventName, { detail: { message: "Update button text" } });
+    document.dispatchEvent(event);
+}

@@ -1,4 +1,4 @@
-import { addBook, getBooks, addBookItems, setAsBorrowed } from "./book.js";
+import { addBook, getBooks, addBookItems, setAsBorrowed, refuseBorrowing } from "./book.js";
 import { getNotifications } from "./notifications.js";
 import { checkLoging, displayConent, hideContent, showpopup, createElement, createBtn } from "./utils.js";
 
@@ -44,9 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const notificationElement = createElement("li", "notification-item", notification.id, undefined);
             const message = createElement("p", "notification-message", undefined, notification.message);
             const acceptBtn = createBtn("Accept", "accept-btn", "accept-btn");
-            notificationElement.append(message, acceptBtn);
+            const refuseBtn = createBtn("Refuse", "refuse-btn", "refuse-btn");
+            notificationElement.append(message, acceptBtn, refuseBtn);
             notificationsList.appendChild(notificationElement);
             acceptBtn.addEventListener("click", () => setAsBorrowed(notification.book_id, acceptBtn, notification.id, notificationElement));
+            refuseBtn.addEventListener("click", () => refuseBorrowing(notification.book_id, notification.id, notificationElement));
         });
     }
 

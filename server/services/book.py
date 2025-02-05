@@ -66,9 +66,10 @@ class Book(db.Model):
         book = Book.query.get(book_id)
         if book:
             book.is_borrowed = flag
+            book.borrow_req = flag
             db.session.add(book)
             db.session.commit()
-            return jsonify({'message': "Book set to borrowed"}), 200
+            return jsonify({'message': "Book updated"}), 200
         return jsonify({'error': "Book not found"}), 400
 
     def delete_book(book_id):

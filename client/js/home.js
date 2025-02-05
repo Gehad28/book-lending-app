@@ -14,9 +14,3 @@ document.addEventListener("DOMContentLoaded", () => {
         bookForm.reset();
     });
 });
-
-
-const createEvent = (eventName) => {
-    const event = new CustomEvent(eventName, { detail: { message: "Update book list" } });
-    document.dispatchEvent(event);
-}
