@@ -13,6 +13,7 @@ class Book(db.Model):
     author = db.Column(db.String(255), nullable=False)
     image_path = db.Column(db.String(255), nullable=False)
     is_borrowed = db.Column(db.Boolean, default=False, nullable=False)
+    borrow_req = db.Column(db.Boolean, default=False, nullable=False)
     borrowed_by = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
     borrowed_at = db.Column(db.DateTime(timezone=True), default=func.now(), onupdate=func.now())
@@ -53,6 +54,13 @@ class Book(db.Model):
             db.session.commit()
             return jsonify({'book': book_to_dict(book), 'message': "Book updated successfully"}), 200
         return jsonify({'errors': form.errors})
+    
+    def borrow_book(book_id):
+        book = Book.query.get(book_id)
+        if book:
+            book.borrow_req = True
+            db.session.add(book)
+            db.session.commit()
 
     def set_as_borrowed(book_id, flag):
         book = Book.query.get(book_id)

@@ -4,6 +4,7 @@ from server.forms import BookForm, UpdateBookForm
 from flask import jsonify, request, session
 from server.helper import notification_to_dict
 from server.services.user import User
+from server.services.book import Book
 
 class Notification(db.Model):
     __tablename__ = "notification"
@@ -30,6 +31,7 @@ class Notification(db.Model):
         self.message = f'{borrower.f_name} {borrower.l_name} wants to borrow your book, contact them on: \n email: {borrower.email} \n phone: {borrower.phone}'
         db.session.add(self)
         db.session.commit()
+        Book.borrow_book(self.book_id)
 
     def send_notification(self):
         borrower = User.query.get(self.borrower_id)

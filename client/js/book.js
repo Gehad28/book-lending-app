@@ -32,7 +32,7 @@ export const getBooks = (endipoint, fun) => {
     .then(error => console.log(error));
 }
 
-const borrowBook = (book) => {
+const borrowBook = (book, btn) => {
     fetch(`http://127.0.0.1:5000/notification/send-notification?owner_id=${book.owner_id}&book_id=${book.book_id}`, {
         method: 'POST',
         credentials: 'include'
@@ -41,7 +41,7 @@ const borrowBook = (book) => {
         return response.json();
     })
     .then(data => {
-        console.log(data);
+        btn.disabled = true;
     })
     .then(error => console.log(error));
 }
@@ -142,7 +142,9 @@ const createActionBtns = (book, bookElement, user_id) => {
     }
     else {
         const borrowBtn = createBtn("Borrow", "borrow-btn", "borrow-btn");
-        borrowBtn.addEventListener("click", () => borrowBook(book));
+        console.log(book.book_id, book.borrow_req);
+        borrowBtn.disabled = Boolean(book.borrow_req);
+        borrowBtn.addEventListener("click", () => borrowBook(book, borrowBtn));
         return borrowBtn;
     }
 }
