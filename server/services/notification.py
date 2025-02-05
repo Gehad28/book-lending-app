@@ -44,9 +44,9 @@ class Notification(db.Model):
         return jsonify({'error': "User not found"}), 400
     
     def get_notifications():
-        user = User.query.get(session['user']['user_id'])
-        if user:
-            notifications = user.recieved_notifications
+        user_id = session['user']['user_id']
+        if user_id:
+            notifications = Notification.query.filter(user_id == Notification.owner_id, Notification.status == "Unread").all()
             notifications_list = []
             for notification in notifications:
                 notifications_list.append(notification_to_dict(notification))

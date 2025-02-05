@@ -14,7 +14,7 @@ def send_notification():
 def get_notifications():
     return Notification.get_notifications()
 
-@not_api.route('/mark-as-read')
+@not_api.route('/mark-as-read', methods=['POST'])
 def mark_as_read():
     notification_id = request.args.get('id')
     return Notification.update_status(notification_id)

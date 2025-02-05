@@ -1,15 +1,10 @@
-import { addBook, getBooks, addBookItems } from "./book.js";
+import { addBook, getBooks, addBookItems, setAsBorrowed } from "./book.js";
 import { getNotifications } from "./notifications.js";
-import { checkLoging, displayConent, hideContent, showpopup, createElement } from "./utils.js";
+import { checkLoging, displayConent, hideContent, showpopup, createElement, createBtn } from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     checkLoging([() => getBooks("get-user-books", (data) => addBookItems(data)), () => getNotifications((notifications) => addNotificationItems(notifications))]);
 
-    const ulrParams = new URLSearchParams(window.location.search);
-    if (ulrParams.get("notifications") == "true") {
-    displayConent(notificationsOption, contentNotifications);
-    hideContent([booksOption, settingsOption], [contentBooks, contentSettings]);
-    }
 
     const createTabs = () => {
         const booksOption = document.getElementById("books");
@@ -33,6 +28,12 @@ document.addEventListener("DOMContentLoaded", () => {
             displayConent(settingsOption, contentSettings);
             hideContent([booksOption, notificationsOption], [contentBooks, contentNotifications]);
         });
+
+        const ulrParams = new URLSearchParams(window.location.search);
+        if (ulrParams.get("notifications") == "true") {
+            displayConent(notificationsOption, contentNotifications);
+            hideContent([booksOption, settingsOption], [contentBooks, contentSettings]);
+        }
     }
 
     createTabs();
@@ -42,8 +43,10 @@ document.addEventListener("DOMContentLoaded", () => {
         notifications.forEach(notification => {
             const notificationElement = createElement("li", "notification-item", notification.id, undefined);
             const message = createElement("p", "notification-message", undefined, notification.message);
-            notificationElement.appendChild(message);
+            const acceptBtn = createBtn("Accept", "accept-btn", "accept-btn");
+            notificationElement.append(message, acceptBtn);
             notificationsList.appendChild(notificationElement);
+            acceptBtn.addEventListener("click", () => setAsBorrowed(notification.book_id, acceptBtn, notification.id, notificationElement));
         });
     }
 

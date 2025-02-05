@@ -1,4 +1,5 @@
 import { showpopup, hidepopup, createElement, createBtn } from "./utils.js";
+import { deleteNotification } from "./notifications.js";
 
 export function addBook(book, fun) {
     fetch("http://127.0.0.1:5000/book/add-book", {
@@ -78,8 +79,8 @@ export const deleteBook = (id, bookElement) => {
     .then(error => console.log(error));
 }
 
-const setAsBorrowed = (book, btn) => {
-    fetch(`http://127.0.0.1:5000/book/set-as-borrowed?book_id=${book.book_id}&flag=${true}`, {
+export const setAsBorrowed = (book_id, btn, notification_id, notificationEle) => {
+    fetch(`http://127.0.0.1:5000/book/set-as-borrowed?book_id=${book_id}&flag=${true}`, {
         method: 'POST',
         credentials: 'include'
     })
@@ -87,8 +88,11 @@ const setAsBorrowed = (book, btn) => {
         return response.json();
     })
     .then(data => {
-        console.log(data);
-        btn.innerText = "Make Available";
+        if (btn.id == "set-borrow-btn")
+            btn.innerText = "Make Available";
+        else {
+            deleteNotification(notification_id, notificationEle);
+        }
     })
     .then(error => console.log(error));
 }
@@ -225,7 +229,7 @@ const handleUpdate = (book) => {
 
 const handleBorrowing = (book, btn) => {
     if (btn.innerText == "Set as Borrowed") {
-        setAsBorrowed(book, btn);
+        setAsBorrowed(book.book_id, btn);
     }
     else {
         makeAvailable(book, btn);
