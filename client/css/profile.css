@@ -1,7 +1,7 @@
 @import url('style.css');
 
 .page-container {
-    height: 90vh;
+    height: 100vh;
     flex-direction: row;
     align-items: start;
     justify-content: start;

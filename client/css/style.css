@@ -1,9 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
 :root {
-    --main-color: #6A322F;
-    --secondary-color: #D4BBBE;
-    --third-color: #F8EEEC;
+    --main-color: #3D6F63;
+    --secondary-color: #F16C5B;
+    --third-color: #A5BA9B;
+    --bg-warm: #F2D6C1;
+    --bg-cold: #EFEAE4;
+    --bg-btn: #F6911F;
+    --dark: #3D5150;
     --border-color: #d7d7d7;
 }
 
@@ -14,10 +19,11 @@
 }
 
 body {
-    font-family: "Poppins", serif;
+    /* font-family: "Poppins", serif; */
+    font-family: "Gabarito", serif;
     height: 100vh;
     align-content: center;
-    font-size: 20px;
+    font-size: clamp(16px, 2vw, 20px);
 }
 
 a {
@@ -25,8 +31,22 @@ a {
     color: black;
 }
 
+ul {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+}
+
+ul a {
+    font-size: 1rem;
+}
+
+/* Navbar */
+
 header {
-    padding: 1rem 5rem 0 5rem;
+    padding: 0 clamp(1rem, 5vw, 5rem);
+    padding-top: 1rem;
+    background-color: var(--bg-cold);
 }
 
 nav {
@@ -35,13 +55,8 @@ nav {
 
 nav .logo {
     margin-right: auto;
-    font-weight: 700;
-}
-
-ul {
-    display: flex;
-    gap: 1rem;
-    list-style: none;
+    font-weight: 900;
+    color: var(--main-color);
 }
 
 .nav-options {
@@ -54,30 +69,32 @@ ul {
 }
 
 nav svg {
-    width: 1.2rem;
+    width: clamp(1rem, 0.8vw, 1.2rem);
 }
 
-ul a {
-    font-size: 1rem;
+.nav-options a.active, .nav-options a:hover {
+    color: var(--bg-btn);
 }
 
-.main-section {
-    width: 50%;
-    height: 50vh;
-    align-content: center;
+/* Buttons */
+
+button {
+    background-color: var(--bg-btn);
+    border: none;
+    padding: 0.3rem clamp(0.5rem, 1vw, 1rem);
+    border-radius: 1.5rem;
+    color: var(--bg-cold);
 }
 
-h1 {
-    text-align: center;
+input {
+    padding: 0.3rem clamp(0.5rem, 1vw, 1rem);
+    border-radius: 1.5rem;
+    border-width: 1px;
+    border-style: solid; 
+    border-color: var(--border-color);
 }
 
-.page-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 4rem;
-}
+/* Form */
 
 form {
     display: flex;
@@ -86,19 +103,6 @@ form {
     justify-content: center;
 }
 
-
-button {
-    background: none;
-    border: none;
-}
-
-input, button:not(.logout) {
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    border-width: 1px;
-    border-style: solid;
-    border-color: var(--border-color);
-}
 
 input[type="submit"] {
     background-color: transparent;
@@ -113,4 +117,33 @@ input[type="submit"]:active {
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
+}
+
+/* Main Section */
+
+.main-section {
+    width: 50%;
+    height: 50vh;
+    align-content: center;
+}
+
+h1 {
+    text-align: center;
+    font-weight: 900;
+    color: var(--secondary-color);
+}
+
+.page-container {
+    background-color: var(--bg-cold);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+}
+
+/* Media Queries */
+
+@media (max-width: 700px) {
+    
 }
