@@ -1,6 +1,6 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
-
+/* @import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Ultra&display=swap');
 :root {
     --main-color: #3D6F63;
     --secondary-color: #F16C5B;
@@ -24,6 +24,7 @@ body {
     height: 100vh;
     align-content: center;
     font-size: clamp(16px, 2vw, 20px);
+    min-height: 100vh;
 }
 
 a {
@@ -37,9 +38,6 @@ ul {
     list-style: none;
 }
 
-ul a {
-    font-size: 1rem;
-}
 
 /* Navbar */
 
@@ -47,15 +45,18 @@ header {
     padding: 0 clamp(1rem, 5vw, 5rem);
     padding-top: 1rem;
     background-color: var(--bg-cold);
+    font-size: clamp(0.5rem, 1vw, 1.2rem);
 }
 
 nav {
     display: flex;
+    align-items: center;
 }
 
 nav .logo {
     margin-right: auto;
     font-weight: 900;
+    font-size: clamp(0.8rem, 2vw, 1.5rem);
     color: var(--main-color);
 }
 
@@ -69,7 +70,7 @@ nav .logo {
 }
 
 nav svg {
-    width: clamp(1rem, 0.8vw, 1.2rem);
+    width: clamp(0.7rem, 0.8vw, 1.2rem);
 }
 
 .nav-options a.active, .nav-options a:hover {
@@ -84,6 +85,7 @@ button {
     padding: 0.3rem clamp(0.5rem, 1vw, 1rem);
     border-radius: 1.5rem;
     color: var(--bg-cold);
+    cursor: pointer;
 }
 
 input {
@@ -119,22 +121,7 @@ input[type="submit"]:active {
     border-radius: 50%;
 }
 
-/* Main Section */
-
-.main-section {
-    width: 50%;
-    height: 50vh;
-    align-content: center;
-}
-
-h1 {
-    text-align: center;
-    font-weight: 900;
-    color: var(--secondary-color);
-}
-
 .page-container {
-    background-color: var(--bg-cold);
     display: flex;
     flex-direction: column;
     justify-content: center;
