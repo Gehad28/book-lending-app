@@ -4,6 +4,11 @@ body {
     display: none;
 }
 
+h1, h4{
+    font-family: "Ultra", serif;
+    font-weight: 400;
+}
+
 /* Main Section */
 
 .main-section {
@@ -20,61 +25,70 @@ body {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: auto;
+    height: clamp(108px, 100vw, 250px);
     fill: var(--bg-cold);
-    z-index: -1;
+    z-index: 5;
 }
 
 h1 {
     padding: 0 clamp(2rem, 25vw, 25rem);
     text-align: center;
     color: var(--secondary-color);
-    font-family: "Ultra", serif;
-    font-weight: 400;
     font-size: clamp(1.4rem, 2vw, 10rem);
 }
 
 .bg-vector {
     position: absolute;
-    z-index: 1;
     overflow: hidden;
+    z-index: 10;
 }
 
 .vector-1 {
     width: clamp(10rem, 25vw, 15rem);
     right: 0;
-    top: 75%;
+    top: 65vh;
 }
 
 .vector-2 {
     width: clamp(10rem, 25vw, 25rem);
-    top: 95%;
+    top: 85vh;
     left: 5rem;
-}
-
-.vector-3 {
-
 }
 
 .vector-4 {
     width: clamp(10rem, 25vw, 17rem);
-    top: 20%;
-    left: 14%;
+    top: 20vh;
+    left: 12vw;
 }
 
 .book-form-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: clamp(2rem, 10vw, 10rem);    
     text-align: center;
+    height: 100vh;
+    width: 100%;
+    background-color: var(--bg-warm);
+    z-index: 0;
+}
+
+.book-form-container .title {
+    width: clamp(5rem, 35vw, 30rem);
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    color: var(--main-color);
 }
 
 .book-form-container form {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    width: clamp(8rem, 25vw, 15rem);
+}
+
+.book-form-container form h4 {
+    color: white;
+    font-size: clamp(1rem, 2vw, 1.5rem);
 }
 
 .book-form-container p {
@@ -113,13 +127,13 @@ h1 {
     height: 300px;
 }
 
-.action-btns {
+/* .action-btns {
     display: flex;
     justify-content: center;
     gap: 1rem;
-}
+} */
 
-.edit-btn {
+/* .edit-btn {
     flex: 1;
     cursor: pointer;
 }
@@ -132,9 +146,9 @@ h1 {
 
 .delete-btn svg {
     width: 1.2rem;
-}
+} */
 
-.overlay {
+/* .overlay {
     background-color: black;
     opacity: 30%;
     width: 100%;
@@ -175,4 +189,28 @@ h1 {
     cursor: pointer;
     font-size: 0.6em;
     text-align: start;
+} */
+
+@media (max-width: 768px) {
+    h1 {
+        padding: 0 clamp(1rem, 15vw, 25rem);
+    }
+
+    .book-form-container {
+        flex-direction: column;
+    }
+
+    .book-form-container .title {
+        width: clamp(15rem, 50vw, 25rem);
+    }
+
+    .book-form-container form {
+        width: clamp(15rem, 35vw, 20rem);
+    }
+}
+
+@media (max-width: 425px) {
+    .vector-1 {
+        display: none;
+    }
 }

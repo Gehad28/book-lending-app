@@ -53,15 +53,20 @@
             </svg>
         </div>
         <div class="book-form-container">
-            <h4>Add a book</h4>
-            <p id="message"></p>
+            <div class="title">
+                <h3>
+                    Share your book with fellow readers! Add a book to our collection and let others discover and request to borrow it.
+                </h3>
+            </div>
             <form id="bookForm">
+                <h4>Add a book</h4>
+                <p id="message"></p>
                 <label for="title" hidden>Title</label>
                 <input type="text" id="title" name="title" placeholder="Book Title..">
                 <label for="author" hidden>Author</label>
                 <input type="text" id="author" name="author" placeholder="Book Author..">
-                <label for="image" hidden>Iamge</label>
-                <input type="file" name="image" id="image">
+                <label for="image" class="custom-file-label">Update Image</label>
+                <input type="file" name="image" id="image" class="custom-file-input">
     
                 <input type="submit" value="Add">
             </form>
@@ -74,7 +79,7 @@
         </div>
     </section>
 
-    <div class="overlay"></div>
+    <!-- <div class="overlay"></div>
     <section class="form-popup">
         <h3>Edit Your Book</h3>
         <form id="editForm">
@@ -87,7 +92,7 @@
 
             <input type="submit" value="Edit">
         </form>
-    </section>
+    </section> -->
     
     <script type="module" src="../js/home.js"></script>
     <script src="../js/header.js"></script>

@@ -79,22 +79,41 @@ nav svg {
 
 /* Buttons */
 
-button {
+.custom-file-input {
+    display: none;
+}
+
+button, input[type="submit"] {
     background-color: var(--bg-btn);
     border: none;
-    padding: 0.3rem clamp(0.5rem, 1vw, 1rem);
+    padding: 0.5rem clamp(0.5rem, 1vw, 1rem);
     border-radius: 1.5rem;
     color: var(--bg-cold);
     cursor: pointer;
 }
 
-input {
-    padding: 0.3rem clamp(0.5rem, 1vw, 1rem);
-    border-radius: 1.5rem;
-    border-width: 1px;
-    border-style: solid; 
-    border-color: var(--border-color);
+.custom-file-label {
+    background-color: white;
+    cursor: pointer;
 }
+
+input, .custom-file-label {
+    padding: 0.5rem clamp(0.8rem, 1vw, 1rem);
+    border-radius: 1.5rem;
+    border: none;
+    font-size: 0.8rem;
+    color: var(--dark);
+}
+
+input[type="text"], input[type="text"]::placeholder {
+    color: var(--dark);
+}
+
+input:focus-visible {
+    outline: none;
+    border: none;
+}
+
 
 /* Form */
 
@@ -107,11 +126,12 @@ form {
 
 
 input[type="submit"] {
-    background-color: transparent;
+    background-color: var(--main-color);
+    color: var(--bg-cold);
     cursor: pointer;
 }
 
-input[type="submit"]:active {
+input[type="submit"]:hover {
     background-color: var(--third-color);
 }
 
