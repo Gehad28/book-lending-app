@@ -45,7 +45,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const message = createElement("p", "notification-message", undefined, notification.message);
             const acceptBtn = createBtn("Accept", "accept-btn", "accept-btn");
             const refuseBtn = createBtn("Refuse", "refuse-btn", "refuse-btn");
-            notificationElement.append(message, acceptBtn, refuseBtn);
+            const actionBtns = createElement("div", "action-btns", undefined, undefined);
+            actionBtns.append(acceptBtn, refuseBtn);
+            notificationElement.append(message, actionBtns);
             notificationsList.appendChild(notificationElement);
             acceptBtn.addEventListener("click", () => setAsBorrowed(notification.book_id, acceptBtn, notification.id, notificationElement));
             refuseBtn.addEventListener("click", () => refuseBorrowing(notification.book_id, notification.id, notificationElement));
@@ -58,6 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const lName = document.getElementById("l_name");
         const email = document.getElementById("email");
         const phone = document.getElementById("phone");
+        const img = document.getElementById("profile-img");
+        img.src = `http://127.0.0.1:5000/${user.image_path}`;
     
         fName.innerText = user['f_name'];
         lName.innerText = user['l_name'];

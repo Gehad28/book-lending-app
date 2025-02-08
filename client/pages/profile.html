@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/profile.css">
@@ -41,7 +42,7 @@
         <div class="sidebar">
             <ul>
                 <li id="books" class="active">Books</li>
-                <li id="notifications">Notification</li>
+                <li id="notifications">Notifications</li>
                 <li id="settings">Settings</li>
             </ul>
         </div>
@@ -55,11 +56,22 @@
         </div>
         <div class="content content-settings" id="content-settings">
             <h4>Settings</h4>
+            <div class="profile">
+                <img src="" alt="" id="profile-img" class="profile-img">
+                <div class="name">
+                    <p id="f_name"></p>
+                    <p id="l_name"></p>
+                </div>
+            </div>
             <div class="info">
-                <p>First Name: <span id="f_name"></span></p>
-                <p>Last Name: <span id="l_name"></span></p>
-                <p>Email: <span id="email"></span></p>
-                <p>Phone Number: <span id="phone"></span></p>
+                <p>
+                    <i class="fas fa-envelope"></i> 
+                    <span id="email"></span>
+                </p>
+                <p>
+                    <i class="fas fa-phone"></i>
+                    <span id="phone"></span>
+                </p>
             </div>
         </div>
     </section>
