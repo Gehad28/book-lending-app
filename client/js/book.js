@@ -182,7 +182,9 @@ const createUserInfo = (book) => {
     image.src = `http://127.0.0.1:5000/${book.owner.image_path}`;
     const FName = createElement("p", "user-name", undefined, book.owner.f_name);
     const LName = createElement("p", "user-name", undefined, book.owner.l_name);
-    info.append(FName, LName, image);
+    const name = createElement("div", "name", undefined, undefined);
+    name.append(FName, LName);
+    info.append(image, name);
     return info;
 }
 

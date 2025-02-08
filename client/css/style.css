@@ -88,12 +88,16 @@ nav svg {
 }
 
 button, input[type="submit"] {
-    background-color: var(--bg-btn);
+    background-color: var(--secondary-color);
     border: none;
     padding: 0.5rem clamp(0.5rem, 1vw, 1rem);
     border-radius: 1.5rem;
     color: var(--bg-cold);
     cursor: pointer;
+}
+
+button:hover {
+    background-color: var(--bg-btn);
 }
 
 .custom-file-label {
@@ -150,7 +154,7 @@ input[type="submit"]:hover {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 4rem;
+    /* gap: 4rem; */
 }
 
 /* Media Queries */

@@ -98,12 +98,20 @@ h1 {
 
 .books-container {
     text-align: center;
+    width: 100%;
+    background-color: var(--bg-cold);
+    height: 100vh;
+    align-content: center;
+}
+
+.books-container h4 {
+    color: var(--bg-btn);
 }
 
 .books-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 3rem;
     align-items: center;
     justify-content: center;
     list-style: none;
@@ -115,14 +123,54 @@ h1 {
     flex-direction: column;
     gap: 1rem;
     justify-content: center;
+    align-items: center;
 }
 
 .books-list li .info {
     display: flex;
     flex-direction: column;
+    order: 3;
+}
+
+.books-list .info p:first-child {
+    color: var(--secondary-color);
+    font-weight: 500;
+}
+
+.books-list .info p:last-child {
+    color: var(--dark);
+}
+
+.books-list .user-info {
+    order: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+}
+
+.books-list .user-info .name {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.books-list li button {
+    background-color: var(--secondary-color);
+    order: 4;
+    width: 100%;
+}
+
+.books-list li button:hover {
+    background-color: var(--third-color);
+}
+
+.books-list li button:disabled {
+    background-color: var(--bg-warm);
+    cursor: default;
 }
 
 .book_image {
+    order: 1;
     width: 250px;
     height: 300px;
 }
