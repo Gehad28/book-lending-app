@@ -12,7 +12,7 @@ const register = (formData) => {
         }
         return request.json();
     }).then(data => {
-        window.location.href = "../pages/index.html";
+        window.location.href = "../pages/home.html";
     });
 }
 
