@@ -4,10 +4,10 @@ body {
     display: none;
 }
 
-h1, h4{
+/* h1, h4{
     font-family: "Ultra", serif;
     font-weight: 400;
-}
+} */
 
 /* Main Section */
 
@@ -51,7 +51,7 @@ h1 {
 
 .vector-2 {
     width: clamp(10rem, 25vw, 25rem);
-    top: 85vh;
+    top: 75vh;
     left: 5rem;
 }
 

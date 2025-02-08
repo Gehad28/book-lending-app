@@ -9,7 +9,7 @@
 </head>
 <body>
     <section class="page-container">
-        <div class="container">
+        <div class="container register">
             <h4>Register</h4>
             <form method="post" id="registerForm">
                 <label for="f_name" hidden="hidden">First Name</label>
@@ -22,8 +22,8 @@
                 <input type="password" name="password" id="password" placeholder="Password">
                 <label for="phone" hidden>Phone Number</label>
                 <input type="text" name="phone" id="phone" placeholder="Phone Number">
-                <label for="profile_image" hidden>Upload Image</label>
-                <input type="file" name="profile_image" id="profile_image">
+                <label for="profile_image" class="custom-file-label">Update Image</label>
+                <input type="file" name="profile_image" id="profile_image" class="custom-file-input">
 
                 <input type="submit" value="Submit">
                 <p>Already have an account? <a href="login.html" class="link">Login</a></p>

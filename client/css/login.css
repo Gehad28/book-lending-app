@@ -1,7 +1,11 @@
 @import url('style.css');
 
+body {
+    background-color: var(--bg-cold);
+}
+
 .container {
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--third-color);
     border-radius: 1rem;
     padding: 3rem;
     display: flex;
@@ -11,9 +15,32 @@
     gap: 1rem;
 }
 
+.register {
+    padding: 3rem clamp(2rem, 15vw, 5rem);
+}
+
+h4 {
+    color: var(--secondary-color);
+}
+
 form p {
     text-align: center;
     font-size: 0.6em;
+    color: var(--dark);
+}
+
+input, input:focus-visible, .custom-file-label {
+    background: none;
+    border: 1px solid var(--third-color);
+}
+
+.custom-file-label:hover {
+    background-color: var(--third-color);
+    color: var(--bg-cold);
+}
+
+input, input::placeholder {
+    color: var(--dark);
 }
 
 .link {

@@ -38,6 +38,10 @@ ul {
     list-style: none;
 }
 
+h1, h4{
+    font-family: "Ultra", serif;
+    font-weight: 400;
+}
 
 /* Navbar */
 
