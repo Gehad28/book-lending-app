@@ -100,7 +100,7 @@ h1 {
     text-align: center;
     width: 100%;
     background-color: var(--bg-cold);
-    height: 100vh;
+    min-height: 100vh;
     align-content: center;
 }
 
@@ -153,6 +153,7 @@ h1 {
 .books-list .user-info .name {
     display: flex;
     gap: 0.2rem;
+    color: var(--dark);
 }
 
 .books-list li button {
