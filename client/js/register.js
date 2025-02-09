@@ -5,14 +5,21 @@ const register = (formData) => {
         method: 'POST',
         credentials: "include",
         body: formData
-    }).then(request => {
-        if (!request.ok) {
-            console.log("Something went wrong!");
-            return null;
+    }).then(request => request.json()
+    ).then(data => {
+        document.querySelector(".error-message.active")?.classList.remove("active");
+        if (data.errors) {
+            const errors = document.querySelectorAll(".error-message");
+            errors.forEach(error => {
+                if (data.errors[error.dataset.error]) {
+                    error.classList.toggle("active");
+                    error.innerText = data.errors[error.dataset.error];
+                }
+            });
         }
-        return request.json();
-    }).then(data => {
-        window.location.href = "../pages/home.html";
+        else {
+            window.location.href = "../pages/home.html";
+        }
     });
 }
 

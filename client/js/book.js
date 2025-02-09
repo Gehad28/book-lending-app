@@ -11,9 +11,21 @@ export function addBook(book, fun) {
         return response.json();
     })
     .then(data => {
-        fun(data);
-        if (JSON.parse(localStorage.getItem('user')).user_id != data.book.owner_id)
-            createBookItem(data.book);
+        document.querySelector(".error-message.active")?.classList.remove("active");
+        if (data.errors) {
+            const errors = document.querySelectorAll(".error-message");
+            errors.forEach(error => {
+                if (data.errors[error.dataset.error]) {
+                    error.classList.toggle("active");
+                    error.innerText = data.errors[error.dataset.error];
+                }
+            });
+        }
+        else {
+            fun(data);
+            if (JSON.parse(localStorage.getItem('user')).user_id != data.book.owner_id)
+                createBookItem(data.book);
+        }
     })
     .then(error => console.log(error));
 }
@@ -57,9 +69,20 @@ export const updateBook = (formData, id) => {
         return response.json();
     })
     .then(data => {
-        console.log(data);
-        hidepopup();
-        updateBookCard(data.book);
+        document.querySelector(".error-message.active")?.classList.remove("active");
+        if (data.errors) {
+            const errors = document.querySelectorAll(".error-message");
+            errors.forEach(error => {
+                if (data.errors[error.dataset.error]) {
+                    error.classList.toggle("active");
+                    error.innerText = data.errors[error.dataset.error];
+                }
+            });
+        }
+        else {
+            hidepopup();
+            updateBookCard(data.book);
+        }
     })
     .then(error => console.log(error));
 }

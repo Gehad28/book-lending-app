@@ -63,11 +63,14 @@
                 <p id="message"></p>
                 <label for="title" hidden>Title</label>
                 <input type="text" id="title" name="title" placeholder="Book Title..">
+                <p class="error-message" data-error="title"></p>
                 <label for="author" hidden>Author</label>
                 <input type="text" id="author" name="author" placeholder="Book Author..">
+                <p class="error-message" data-error="author"></p>
                 <label for="image" class="custom-file-label">Update Image</label>
                 <input type="file" name="image" id="image" class="custom-file-input">
-    
+                <p class="error-message" data-error="image"></p>
+
                 <input type="submit" value="Add">
             </form>
         </div>

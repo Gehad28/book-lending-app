@@ -43,6 +43,16 @@ h1, h4{
     font-weight: 400;
 }
 
+.error-message {
+    display: none;
+    color: var(--bg-btn);
+    font-size: 0.8rem;
+}
+
+.error-message.active {
+    display: block;
+}
+
 /* Navbar */
 
 header {

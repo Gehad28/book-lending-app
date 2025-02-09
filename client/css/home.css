@@ -91,11 +91,6 @@ h1 {
     font-size: clamp(1rem, 2vw, 1.5rem);
 }
 
-.book-form-container p {
-    font-size: 0.6em;
-    color: green;
-}
-
 .books-container {
     text-align: center;
     width: 100%;

@@ -14,16 +14,22 @@
             <form method="post" id="registerForm">
                 <label for="f_name" hidden="hidden">First Name</label>
                 <input type="text" name="f_name" id="f_name" placeholder="First Name">
+                <p class="error-message" data-error="f_name"></p>
                 <label for="l_name" hidden>Last Name</label>
                 <input type="text" name="l_name" id="l_name" placeholder="Last Name">
+                <p class="error-message" data-error="l_name"></p>
                 <label for="email" hidden>Email</label>
                 <input type="email" name="email" id="email" placeholder="Email">
+                <p class="error-message" data-error="email"></p>
                 <label for="password" hidden>Password</label>
                 <input type="password" name="password" id="password" placeholder="Password">
+                <p class="error-message" data-error="password"></p>
                 <label for="phone" hidden>Phone Number</label>
                 <input type="text" name="phone" id="phone" placeholder="Phone Number">
+                <p class="error-message" data-error="phone"></p>
                 <label for="profile_image" class="custom-file-label">Update Image</label>
                 <input type="file" name="profile_image" id="profile_image" class="custom-file-input">
+                <p class="error-message" data-error="profile_image"></p>
 
                 <input type="submit" value="Submit">
                 <p>Already have an account? <a href="login.html" class="link">Login</a></p>

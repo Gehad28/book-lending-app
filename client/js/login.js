@@ -15,15 +15,17 @@ const login = (formData) => {
         method: 'POST',
         credentials: "include",
         body: formData
-    }).then((request) => {
-        if (!request.ok) {
-            return null;
+    }).then((request) => request.json()
+    ).then((data) => {
+        if (data.error) {
+            const mes = document.getElementById("error-message");
+            mes.classList.toggle("active");
+            mes.innerText = data.error
         }
-
-        return request.json();
-    }).then((data) => {
-        localStorage.setItem("user", JSON.stringify(data.user));
-        window.location.href = "../pages/home.html";
+        else {
+            localStorage.setItem("user", JSON.stringify(data.user));
+            window.location.href = "../pages/home.html";
+        }
     });
 }
 

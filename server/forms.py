@@ -33,10 +33,8 @@ class RegisterForm(FlaskForm):
     def validate_email(self, field):
         from server.services.user import User
         user = User.query.filter_by(email=field.data).first()
-        if 'user' in session:
-            current_user_id = session['user']['user_id']
-            if user.user_id != current_user_id:
-                raise ValidationError("Email already exists")
+        if user:
+            raise ValidationError("Email already exists")
 
 class LoginForm(FlaskForm):
     """

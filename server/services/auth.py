@@ -37,7 +37,7 @@ class Authentication():
             else:
                 return jsonify({'error': "Incorrect email or password"}), 400
         else:
-            return jsonify({'errors': form.errors}), 400
+            return jsonify({'error': "Incorrect email or password"}), 400
     
     def logout():
         """
