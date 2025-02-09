@@ -3,7 +3,8 @@ import { getNotifications } from "./notifications.js";
 import { checkLoging, displayConent, hideContent, showpopup, createElement, createBtn } from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    checkLoging([() => getBooks("get-user-books", (data) => addBookItems(data)), () => getNotifications((notifications) => addNotificationItems(notifications))]);
+    checkLoging([() => getBooks("get-user-books", (data) => addBookItems(data)), 
+        () => getNotifications((notifications) => addNotificationItems(notifications))]);
 
 
     const createTabs = () => {
@@ -49,7 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
             actionBtns.append(acceptBtn, refuseBtn);
             notificationElement.append(message, actionBtns);
             notificationsList.appendChild(notificationElement);
-            acceptBtn.addEventListener("click", () => setAsBorrowed(notification.book_id, acceptBtn, notification.id, notificationElement));
+            console.log(notification.borrower_id);
+            acceptBtn.addEventListener("click", () => setAsBorrowed(notification.book_id, acceptBtn, notification.borrower_id, notification.id, notificationElement));
             refuseBtn.addEventListener("click", () => refuseBorrowing(notification.book_id, notification.id, notificationElement));
         });
     }

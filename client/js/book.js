@@ -79,8 +79,21 @@ export const deleteBook = (id, bookElement) => {
     .then(error => console.log(error));
 }
 
-export const setAsBorrowed = (book_id, btn, notification_id, notificationEle) => {
-    fetch(`http://127.0.0.1:5000/book/set-as-borrowed?book_id=${book_id}&flag=${true}`, {
+export const setAsBorrowed = (book_id, btn, borrower_id, notification_id, notificationEle) => {
+    const baseUrl = 'http://127.0.0.1:5000/book/set-as-borrowed';
+
+    // Create a URL object
+    const url = new URL(baseUrl);
+
+    // Append required query parameters
+    url.searchParams.append('book_id', book_id);
+    url.searchParams.append('flag', true); // or use flag.toString() if needed
+
+    // Only append borrower_id if it is defined and not null
+    if (borrower_id !== undefined && borrower_id !== null) {
+        url.searchParams.append('borrower_id', borrower_id);
+    }
+    fetch(url.toString(), {
         method: 'POST',
         credentials: 'include'
     })
@@ -92,6 +105,7 @@ export const setAsBorrowed = (book_id, btn, notification_id, notificationEle) =>
             btn.innerText = "Make Available";
         else {
             createEvent("updateBtnText");   // Dispatch an event called updatebtnText to update the set as borrowed btn
+            createEvent("createBorrowerInfo");
             deleteNotification(notification_id, notificationEle);
         }
     })
@@ -109,6 +123,7 @@ const makeAvailable = (book, btn) => {
     .then(data => {
         console.log(data);
         btn.innerText = "Set as Borrowed";
+        document.getElementById("borrower-info")?.remove();
     })
     .then(error => console.log(error));
 }
@@ -125,6 +140,22 @@ export const refuseBorrowing = (book_id, notification_id, notificationEle) => {
         deleteNotification(notification_id, notificationEle);
     })
     .then(error => console.log(error));
+}
+
+const getUser = (user_id) => {
+    const user = {};
+    fetch(`http://127.0.0.1:5000/user/get-user?user_id=${user_id}`, {
+        method: 'GET',
+        credentials: 'include'
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        user = data.user;
+    })
+    .then(error => console.log(error));
+    return user;
 }
 
 // _____ Rendering Books ______
@@ -188,6 +219,24 @@ const createUserInfo = (book) => {
     return info;
 }
 
+const createBorrowerInfo = (borrower) => {
+    const info = createElement("div", "borrower-info", "borrower-info", "Borrowed by:");
+    const FName = createElement("p", "user-name", undefined, borrower.f_name);
+    const LName = createElement("p", "user-name", undefined, borrower.l_name);
+    const name = createElement("div", "name", undefined, undefined);
+    const email = createElement("p", "user-email", undefined, borrower.email);
+    const phone = createElement("p", "user-phone", undefined, borrower.phone);
+    const emailIcon = createElement("i", "fas", undefined, undefined);
+    emailIcon.classList.add("fa-envelope");
+    const phoneIcon = createElement("i", "fas", undefined, undefined);
+    phoneIcon.classList.add("fa-phone");
+    email.appendChild(emailIcon);
+    phone.appendChild(phoneIcon);
+    name.append(FName, LName);
+    info.append(name, email, phone);
+    return info;
+}
+
 const createBookElement = (book) => {
     const bookElement = createElement("li", "book-item", `book-${book.book_id}`, undefined);
 
@@ -205,6 +254,14 @@ const createBookElement = (book) => {
     if (book.owner_id == user_id) {
         const borrowBtn = createBorrowBtn(book);
         cradInfo.appendChild(borrowBtn);
+        if (book.borrower) {
+            const borrowerInfo = createBorrowerInfo(book.borrower);
+            cradInfo.appendChild(borrowerInfo);
+        }
+        // document.addEventListener("createBorrowerInfo", () => {
+        //     const borrowerInfo = createBorrowerInfo(book.borrower);
+        //     cradInfo.appendChild(borrowerInfo);
+        // });
     }
     else {
         const userInfo = createUserInfo(book);
@@ -248,7 +305,7 @@ const handleUpdate = (book) => {
 
 const handleBorrowing = (book, btn) => {
     if (btn.innerText == "Set as Borrowed") {
-        setAsBorrowed(book.book_id, btn);
+        setAsBorrowed(book.book_id, btn, null);
     }
     else {
         makeAvailable(book, btn);

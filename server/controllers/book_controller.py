@@ -18,7 +18,8 @@ def update_book():
 def set_as_borrowed():
     book_id = request.args.get('book_id')
     flag = request.args.get('flag', 'false').lower() in ['true', '1']
-    return Book.set_as_borrowed(book_id, flag)
+    borrower_id = request.args.get('borrower_id')
+    return Book.set_as_borrowed(book_id, borrower_id, flag)
 
 @book_api.route('/delete-book')
 def delete_book():

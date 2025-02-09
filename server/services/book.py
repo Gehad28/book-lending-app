@@ -40,7 +40,7 @@ class Book(db.Model):
             return jsonify({'error': "Not authorized"}), 401
         else:
             return jsonify({'errors': form.errors}), 400
-        
+    
     def update_book(form_data, image):
         form = UpdateBookForm(form_data)
         if form.validate_on_submit():
@@ -62,11 +62,15 @@ class Book(db.Model):
             db.session.add(book)
             db.session.commit()
 
-    def set_as_borrowed(book_id, flag):
+    def set_as_borrowed(book_id, borrower_id, flag):
         book = Book.query.get(book_id)
         if book:
             book.is_borrowed = flag
             book.borrow_req = flag
+            if flag and borrower_id:
+                book.borrowed_by = borrower_id
+            else:
+                book.borrowed_by = None
             db.session.add(book)
             db.session.commit()
             return jsonify({'message': "Book updated"}), 200

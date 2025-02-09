@@ -31,7 +31,8 @@ def book_to_dict(book):
         'is_borrowed': book.is_borrowed,
         'owner_id': book.owner_id,
         'borrowd_by': book.borrowed_by,
-        'borrow_req': book.borrow_req
+        'borrow_req': book.borrow_req,
+        'borrower': to_dict(book.borrower) if book.borrower else None
     }
 
 def notification_to_dict(notification):
@@ -41,7 +42,7 @@ def notification_to_dict(notification):
         'message': notification.message,
         'status': notification.status,
         'owner_id': notification.owner_id,
-        'borrowd_id': notification.borrower_id
+        'borrower_id': notification.borrower_id
     }
 
 def upload(file):
