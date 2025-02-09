@@ -57,8 +57,11 @@ class User(db.Model):
         
         form = RegisterForm(form_data)
         if form.validate_on_submit():
-            filename, file_path = upload(image)
-            self.image_path = file_path
+            if image:
+                filename, file_path = upload(image)
+                self.image_path = file_path
+            else:
+                self.image_path = 'images/default_profile.jpg'
             db.session.add(self)
             db.session.commit()
             return jsonify({'user': to_dict(self)}), 200

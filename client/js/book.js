@@ -11,7 +11,7 @@ export function addBook(book, fun) {
         return response.json();
     })
     .then(data => {
-        document.querySelector(".error-message.active")?.classList.remove("active");
+        document.querySelectorAll(".error-message.active")?.forEach(ele => ele.classList.remove("active"));
         if (data.errors) {
             const errors = document.querySelectorAll(".error-message");
             errors.forEach(error => {

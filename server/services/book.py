@@ -29,11 +29,14 @@ class Book(db.Model):
     def create_book(self, form_data, image):
         form = BookForm(form_data)
         if form.validate_on_submit():
-            filename, file_path = upload(image)
-            self.image_path = file_path
             if 'user' in session:
                 user = session['user']
                 self.owner_id = user['user_id']
+                if image:
+                    filename, file_path = upload(image)
+                    self.image_path = file_path
+                else:
+                    return jsonify({'errors': {'image': "This field is required"}}), 400
                 db.session.add(self)
                 db.session.commit()
                 return jsonify({'book': book_to_dict(self), 'message': "Book added successfully"}), 200
