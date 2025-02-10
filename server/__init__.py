@@ -2,8 +2,10 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from datetime import timedelta
+from flask_bcrypt import Bcrypt
 
 db = SQLAlchemy()
+bcrypt = Bcrypt()
 
 def create_app():
     app = Flask(__name__)
@@ -15,6 +17,7 @@ def create_app():
     CORS(app, supports_credentials=True)
 
     db.init_app(app)
+    bcrypt.init_app(app)
 
     with app.app_context():
         from server.controllers.user_controller import user_api  # Import routes here

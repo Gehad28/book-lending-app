@@ -31,6 +31,10 @@ def get_book():
     book_id = request.args.get('book_id')
     return Book.get_book(book_id)
 
+@book_api.route('/get-borrowed-books')
+def get_borrowed_books():
+    return Book.get_borrowed_books()
+
 @book_api.route('/get-user-books')
 def get_user_books():
     return Book.get_user_books()

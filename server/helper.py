@@ -30,7 +30,7 @@ def book_to_dict(book):
         'image_path': book.image_path,
         'is_borrowed': book.is_borrowed,
         'owner_id': book.owner_id,
-        'borrowd_by': book.borrowed_by,
+        'borrowed_by': book.borrowed_by,
         'borrow_req': book.borrow_req,
         'borrower': to_dict(book.borrower) if book.borrower else None
     }

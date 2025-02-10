@@ -335,16 +335,22 @@ const handleBorrowing = (book, btn) => {
     }
 }
 
-const createBookItem = (book) => {
-    const booksList = document.getElementById("books-list");
+const createBookItem = (book, borrowed) => {
+    let booksList = null;
+    if (borrowed)
+        booksList = document.getElementById("borrowed-books-list");
+    else
+        booksList = document.getElementById("books-list");
     const bookElement = createBookElement(book);
     booksList.appendChild(bookElement);
 }
 
-export const addBookItems = (data) => {
-    data.books.reverse().forEach((book) => {
-        createBookItem(book);
-    });
+export const addBookItems = (data, borrowed) => {
+    if (data.books) {
+        data.books.reverse().forEach((book) => {
+            createBookItem(book, borrowed);
+        });
+    }
 }
 
 const updateBookCard = (book) => {

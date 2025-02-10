@@ -2,6 +2,7 @@ from server.forms import LoginForm
 from flask import jsonify, session
 from server.helper import to_dict
 from server.services.user import User
+from server import bcrypt
 
 class Authentication():
     """
@@ -30,7 +31,7 @@ class Authentication():
         form = LoginForm(form_data)
         if form.validate_on_submit():
             user = User.query.filter_by(email=form.email.data).first()
-            if user and form.password.data == user.password:
+            if user and bcrypt.check_password_hash(user.password, form.password.data):
                 session['user'] = to_dict(user)
                 print(session)
                 return jsonify({'user': to_dict(user)}), 200

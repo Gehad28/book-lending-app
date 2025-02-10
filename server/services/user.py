@@ -1,4 +1,4 @@
-from server import db
+from server import db, bcrypt
 from sqlalchemy.sql import func
 from server.forms import RegisterForm
 from flask import jsonify, session
@@ -62,6 +62,7 @@ class User(db.Model):
                 self.image_path = file_path
             else:
                 self.image_path = 'images/default_profile.jpg'
+            self.password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
             db.session.add(self)
             db.session.commit()
             return jsonify({'user': to_dict(self)}), 200

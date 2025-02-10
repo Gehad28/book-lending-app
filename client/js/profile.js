@@ -3,37 +3,45 @@ import { getNotifications } from "./notifications.js";
 import { checkLoging, displayConent, hideContent, showpopup, createElement, createBtn } from "./utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    checkLoging([() => getBooks("get-user-books", (data) => addBookItems(data)), 
-        () => getNotifications((notifications) => addNotificationItems(notifications))]);
+    checkLoging([() => getBooks("get-user-books", (data) => addBookItems(data, false)), 
+        () => getNotifications((notifications) => addNotificationItems(notifications)),
+        () => getBooks("get-borrowed-books", (data) => addBookItems(data, true))]);
 
 
     const createTabs = () => {
         const booksOption = document.getElementById("books");
         const notificationsOption = document.getElementById("notifications");
+        const borrowedBooksOption = document.getElementById("borrowed-books");
         const settingsOption = document.getElementById("settings");
         const contentBooks = document.getElementById("content-books");
         const contentNotifications = document.getElementById("content-notifications");
+        const contentBorrowedBooks = document.getElementById("content-borrowed-books");
         const contentSettings = document.getElementById("content-settings");
     
         booksOption.addEventListener("click", () => {
             displayConent(booksOption, contentBooks);
-            hideContent([notificationsOption, settingsOption], [contentNotifications, contentSettings]);
+            hideContent([notificationsOption, borrowedBooksOption, settingsOption], [contentNotifications, contentBorrowedBooks, contentSettings]);
         });
     
         notificationsOption.addEventListener("click", () => {
             displayConent(notificationsOption, contentNotifications);
-            hideContent([booksOption, settingsOption], [contentBooks, contentSettings]);
+            hideContent([booksOption, borrowedBooksOption, settingsOption], [contentBooks, contentBorrowedBooks, contentSettings]);
         });
+
+        borrowedBooksOption.addEventListener("click", () => {
+            displayConent(borrowedBooksOption, contentBorrowedBooks);
+            hideContent([booksOption, notificationsOption, settingsOption], [contentBooks, contentNotifications, contentSettings]);
+        })
     
         settingsOption.addEventListener("click", () => {
             displayConent(settingsOption, contentSettings);
-            hideContent([booksOption, notificationsOption], [contentBooks, contentNotifications]);
+            hideContent([booksOption, notificationsOption, borrowedBooksOption], [contentBooks, contentNotifications, contentBorrowedBooks]);
         });
 
         const ulrParams = new URLSearchParams(window.location.search);
         if (ulrParams.get("notifications") == "true") {
             displayConent(notificationsOption, contentNotifications);
-            hideContent([booksOption, settingsOption], [contentBooks, contentSettings]);
+            hideContent([booksOption, borrowedBooksOption, settingsOption], [contentBooks, contentBorrowedBooks, contentSettings]);
         }
     }
 
