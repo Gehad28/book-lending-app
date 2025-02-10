@@ -17,8 +17,12 @@ class RegisterForm(FlaskForm):
     """
     
     message = "This filed is required"
-    f_name = StringField('f_name', validators=[DataRequired(message)])
-    l_name = StringField('l_name', validators=[DataRequired(message)])
+    f_name = StringField('f_name', validators=[DataRequired(message),
+                                               Length(min=2, max=50, message="First name must be between 2 and 50 characters."),
+                                               Regexp(r'^[A-Za-z]+$', message="First name can only contain letters.")])
+    l_name = StringField('l_name', validators=[DataRequired(message),
+                                               Length(min=2, max=50, message="Last name must be between 2 and 50 characters."),
+                                               Regexp(r'^[A-Za-z]+$', message="Last name can only contain letters.")])
     email = StringField('email', validators=[DataRequired(message), Email()])
     password = PasswordField('password', validators=[DataRequired(message), Length(min=6, message="Password must be at least 6 characters")])
     phone = StringField('phone', validators=[DataRequired(message), 
@@ -53,9 +57,12 @@ class LoginForm(FlaskForm):
 
 class BookForm(FlaskForm):
     message = "This field is required"
-    title = StringField('title', validators=[DataRequired(message)])
-    author = StringField('author', validators=[DataRequired(message)])
-    # image = FileField('image', validators=[DataRequired(message), Regexp('^.*\.(jpg|jpeg|png)$', message="Invalid File extention")])
+    title = StringField('title', validators=[DataRequired(message),
+                                            Length(min=2, max=50, message="Title must be between 2 and 50 characters."),
+                                            Regexp(r"^[A-Za-z0-9 ]+$", message="Title can only contain letters and numbers.")])
+    author = StringField('author', validators=[DataRequired(message),
+                                               Length(min=2, max=50, message="Author must be between 2 and 50 characters."),
+                                               Regexp(r"^[A-Za-z0-9 ]+$", message="Author can only contain letters and numbers.")])
     submit = SubmitField('Submit')
 
 class UpdateBookForm(FlaskForm):

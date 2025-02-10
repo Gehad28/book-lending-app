@@ -3,6 +3,7 @@ from flask import jsonify, session
 from server.helper import to_dict
 from server.services.user import User
 from server import bcrypt
+from functools import wraps
 
 class Authentication():
     """
@@ -49,3 +50,11 @@ class Authentication():
 
         session.clear()
         return jsonify({'message': "Logged out successfully"}), 201
+    
+    def login_required(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if 'user_id' not in session:
+                return jsonify({'error': 'Unauthorized'}), 401  # Return an error if not logged in
+            return f(*args, **kwargs)
+        return decorated_function

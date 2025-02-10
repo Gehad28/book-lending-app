@@ -18,8 +18,9 @@ const login = (formData) => {
     }).then((request) => request.json()
     ).then((data) => {
         if (data.error) {
+            document.querySelector(".error-message")?.classList.remove("active");
             const mes = document.getElementById("error-message");
-            mes.classList.toggle("active");
+            mes.classList.add("active");
             mes.innerText = data.error
         }
         else {

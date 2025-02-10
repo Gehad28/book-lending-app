@@ -46,7 +46,7 @@ export const showpopup = () => {
     popup("block");
 }
 
-export const hidepopup = () => {
+export const hidepopup = (errors) => {
     popup("none");
 }
 

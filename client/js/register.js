@@ -7,7 +7,7 @@ const register = (formData) => {
         body: formData
     }).then(request => request.json()
     ).then(data => {
-        document.querySelector(".error-message.active")?.classList.remove("active");
+        document.querySelectorAll(".error-message.active")?.forEach(err => err.classList.remove("active"));
         if (data.errors) {
             const errors = document.querySelectorAll(".error-message");
             errors.forEach(error => {

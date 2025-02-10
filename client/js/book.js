@@ -1,8 +1,10 @@
 import { showpopup, hidepopup, createElement, createBtn, createEvent } from "./utils.js";
 import { deleteNotification } from "./notifications.js";
 
+const BASE_URL = "http://127.0.0.1:5000";
+
 export function addBook(book, fun) {
-    fetch("http://127.0.0.1:5000/book/add-book", {
+    fetch(`${BASE_URL}/book/add-book`, {
         method: 'POST',
         credentials: 'include',
         body: book
@@ -31,7 +33,7 @@ export function addBook(book, fun) {
 }
 
 export const getBooks = (endipoint, fun) => {
-    fetch(`http://127.0.0.1:5000/book/${endipoint}`, {
+    fetch(`${BASE_URL}/book/${endipoint}`, {
         method: 'GET',
         credentials: 'include'
     })
@@ -46,7 +48,7 @@ export const getBooks = (endipoint, fun) => {
 }
 
 const borrowBook = (book, btn) => {
-    fetch(`http://127.0.0.1:5000/notification/send-notification?owner_id=${book.owner_id}&book_id=${book.book_id}`, {
+    fetch(`${BASE_URL}/notification/send-notification?owner_id=${book.owner_id}&book_id=${book.book_id}`, {
         method: 'POST',
         credentials: 'include'
     })
@@ -60,7 +62,7 @@ const borrowBook = (book, btn) => {
 }
 
 export const updateBook = (formData, id) => {
-    fetch(`http://127.0.0.1:5000/book/update-book?book_id=${id}`, {
+    fetch(`${BASE_URL}/book/update-book?book_id=${id}`, {
         method: 'POST',
         credentials: 'include',
         body: formData
@@ -69,7 +71,7 @@ export const updateBook = (formData, id) => {
         return response.json();
     })
     .then(data => {
-        document.querySelector(".error-message.active")?.classList.remove("active");
+        document.querySelectorAll(".error-message.active")?.forEach(err => err.classList.remove("active"));
         if (data.errors) {
             const errors = document.querySelectorAll(".error-message");
             errors.forEach(error => {
@@ -88,7 +90,7 @@ export const updateBook = (formData, id) => {
 }
 
 export const deleteBook = (id, bookElement) => {
-    fetch(`http://127.0.0.1:5000/book/delete-book?book_id=${id}`, {
+    fetch(`${BASE_URL}/book/delete-book?book_id=${id}`, {
         method: 'GET',
         credentials: 'include'
     })
@@ -103,16 +105,11 @@ export const deleteBook = (id, bookElement) => {
 }
 
 export const setAsBorrowed = (book_id, btn, borrower_id, notification_id, notificationEle) => {
-    const baseUrl = 'http://127.0.0.1:5000/book/set-as-borrowed';
-
-    // Create a URL object
+    const baseUrl = `${BASE_URL}/book/set-as-borrowed`;
     const url = new URL(baseUrl);
-
-    // Append required query parameters
     url.searchParams.append('book_id', book_id);
-    url.searchParams.append('flag', true); // or use flag.toString() if needed
+    url.searchParams.append('flag', true);
 
-    // Only append borrower_id if it is defined and not null
     if (borrower_id !== undefined && borrower_id !== null) {
         url.searchParams.append('borrower_id', borrower_id);
     }
@@ -136,7 +133,7 @@ export const setAsBorrowed = (book_id, btn, borrower_id, notification_id, notifi
 }
 
 const makeAvailable = (book, btn) => {
-    fetch(`http://127.0.0.1:5000/book/set-as-borrowed?book_id=${book.book_id}&flag=${false}`, {
+    fetch(`${BASE_URL}/book/set-as-borrowed?book_id=${book.book_id}&flag=${false}`, {
         method: 'POST',
         credentials: 'include'
     })
@@ -152,7 +149,7 @@ const makeAvailable = (book, btn) => {
 }
 
 export const refuseBorrowing = (book_id, notification_id, notificationEle) => {
-    fetch(`http://127.0.0.1:5000/book/set-as-borrowed?book_id=${book_id}&flag=${false}`, {
+    fetch(`${BASE_URL}/book/set-as-borrowed?book_id=${book_id}&flag=${false}`, {
         method: 'POST',
         credentials: 'include'
     })
@@ -167,7 +164,7 @@ export const refuseBorrowing = (book_id, notification_id, notificationEle) => {
 
 const getUser = (user_id) => {
     const user = {};
-    fetch(`http://127.0.0.1:5000/user/get-user?user_id=${user_id}`, {
+    fetch(`${BASE_URL}/user/get-user?user_id=${user_id}`, {
         method: 'GET',
         credentials: 'include'
     })
@@ -266,7 +263,7 @@ const createBookElement = (book) => {
     const image = document.createElement("img");
     image.classList.add("book_image");
     image.id = `image-${book.book_id}`;
-    image.src = `http://127.0.0.1:5000/${book.image_path}`;
+    image.src = `${BASE_URL}/${book.image_path}`;
 
     const infoContainer = createInfoContainer(book);
     const actionBtns = createActionBtns(book, bookElement, JSON.parse(localStorage.getItem('user')).user_id);
@@ -358,7 +355,7 @@ const updateBookCard = (book) => {
     const title = document.getElementById(`title-${book.book_id}`);
     const author = document.getElementById(`author-${book.book_id}`);
 
-    image.src = `http://127.0.0.1:5000/${book.image_path}`;
+    image.src = `${BASE_URL}/${book.image_path}`;
     title.innerText = book.title;
     author.innerText = book.author;
 }

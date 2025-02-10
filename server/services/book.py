@@ -116,7 +116,7 @@ class Book(db.Model):
                 books = []
                 for book in user_books:
                     book = book_to_dict(book)
-                    book.update({'owner': to_dict(User.query.get(book['borrowed_by']))})
+                    book.update({'owner': to_dict(User.query.get(book['owner_id']))})
                     books.append(book)
                 return jsonify({'books': books}), 200
             return jsonify({'message': "No borrowed books"}), 200
