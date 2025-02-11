@@ -9,7 +9,7 @@ bcrypt = Bcrypt()
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:gehad_db28@localhost/book_exchange'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:<yourpassword>@localhost/book_exchange'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['WTF_CSRF_ENABLED'] = False
     app.secret_key = 'SECRET KEY'
@@ -20,7 +20,7 @@ def create_app():
     bcrypt.init_app(app)
 
     with app.app_context():
-        from server.controllers.user_controller import user_api  # Import routes here
+        from server.controllers.user_controller import user_api  
         from server.controllers.auth import auth
         from server.controllers.book_controller import book_api
         from server.controllers.notification_controller import not_api
