@@ -1,51 +1,14 @@
 from server import db, bcrypt
 from sqlalchemy.sql import func
-from server.forms import RegisterForm
+from server.forms import RegisterForm, UpdateUserForm
 from flask import jsonify, session
 from server.helper import to_dict, upload
+from server.models.user_model import User
 
-class User(db.Model):
-    """
-    A User class that is connected with the User table in the database.
-    
-    Properties:
-    - `user_id`: The ID of the user.
-    - `f_name`: The user's first name.
-    - `l_name`: The user's last name.
-    - `email`: The user's email address.
-    - `password`: The user's password.
-    - `phone`: The user's phone number.
 
-    Methods:
-    - add_user(form_data)
-    - update_user(form_data)
-    - delete_user(user_id)
-    - get_user(user_id)
-    - get_all_users()
-    """
-    
-    __tablename__ = 'user'
 
-    user_id = db.Column(db.Integer, primary_key=True)
-    f_name = db.Column(db.String(255), nullable=False)
-    l_name = db.Column(db.String(255), nullable=False)
-    email = db.Column(db.String(255), nullable=False, unique=True)
-    password = db.Column(db.String(255), nullable=False)
-    phone = db.Column(db.String(255), nullable=False)
-    image_path = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime(timezone=True), default=func.now(), onupdate=func.now())
-
-    book = db.relationship('Book', back_populates='owner', foreign_keys="Book.owner_id")
-    
-    def __init__(self, f_name, l_name, email, password, phone):
-        self.f_name = f_name
-        self.l_name = l_name
-        self.email = email
-        self.password = password
-        self.phone = phone
-        self.created_at 
-
-    def add_user(self, form_data, image):
+class UserService:
+    def add_user(form_data, image):
         """
         Add a new user to the database
         
@@ -57,19 +20,13 @@ class User(db.Model):
         
         form = RegisterForm(form_data)
         if form.validate_on_submit():
-            if image:
-                filename, file_path = upload(image)
-                self.image_path = file_path
-            else:
-                self.image_path = 'images/default_profile.jpg'
-            self.password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-            db.session.add(self)
-            db.session.commit()
-            return jsonify({'user': to_dict(self)}), 200
+            new_user = User(form.f_name.data, form.l_name.data, form.email.data, form.password.data, form.phone.data)
+            user_data = new_user.add_user(image)
+            return jsonify({'user': user_data}), 200
         else:
             return jsonify({'errors': form.errors}), 400
 
-    def update_user(self, form_data, image):
+    def update_user(form_data, image):
         """
         Update an existing user in the databse
         
@@ -77,21 +34,16 @@ class User(db.Model):
         `user_id` -- The ID of the user to be updated
         Return: A JSON response containing the status of the user updating with the updated user in case of success.
         """
-        form = RegisterForm(form_data)
         user_id = session['user']['user_id']
         user_to_update = User.query.get(user_id)
+        if not user_to_update:
+            return jsonify({'error': "User not found"})
+        
+        form = UpdateUserForm(form_data)
         if form.validate_on_submit():
-                user_to_update.f_name = form.f_name.data
-                user_to_update.l_name = form.l_name.data
-                user_to_update.email = form.email.data
-                user_to_update.password = form.password.data
-                user_to_update.phone = form.phone.data
-                filename, file_path = upload(image)
-                user_to_update.image_path = file_path
-
-                db.session.add(user_to_update)
-                db.session.commit()
-                return jsonify({'updated_user': to_dict(user_to_update)}), 200
+                user_data = user_to_update.update_user(form_data, image)
+                return jsonify({'updated_user': user_data}), 200
+        
         return jsonify({'errors': form.errors}), 400
 
     def delete_user(user_id):
@@ -103,13 +55,13 @@ class User(db.Model):
         Return: A JSON response containing the status of the user deletion.
         """
         
-        user_to_delete = User.query.get_or_404(user_id) #########################################
-        if user_to_delete:
-            db.session.delete(user_to_delete)
-            db.session.commit()
-            return jsonify({'message': "User deleted successfully"}), 200
-        return jsonify({'message': "User not found"}), 400
-    
+        user_to_delete = User.query.get(user_id) 
+        if not user_to_delete:
+            return jsonify({'message': "User not found"}), 400
+        
+        message = user_to_delete.delete_user()
+        return jsonify({'message': message}), 200
+
     def get_user(user_id):
         """
         Fetch a user from the database.
@@ -119,12 +71,11 @@ class User(db.Model):
         Return: A JSON response containing the status of the user fetching with the user in case of success.
         """
         
-        user = User.query.get(user_id)
+        user = User.get_user(user_id)
         if user:
             return jsonify({'user': to_dict(user)}), 200
-        else:
-            return jsonify({'error': "User not found"}), 400
-    
+        return jsonify({'error': "User not found"}), 400
+
     def get_all_users():
         """
         Fetching all users.
@@ -132,8 +83,5 @@ class User(db.Model):
         Return: A JSON response containing the users list.
         """
         
-        users = User.query.all()
-        users_list = []
-        for user in users:
-            users_list.append(to_dict(user))
-        return jsonify({'users': users_list}), 200
+        users = User.get_all_users()
+        return jsonify({'users': users}), 200

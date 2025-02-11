@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from server.services.user import User
+from server.services.user import UserService
 
 user_api = Blueprint('user', __name__, url_prefix='/user')
 
@@ -18,10 +18,8 @@ def register():
     Return: A JSON response containing the status of the user creation with the new user in case of success.
     """
     
-    data = request.form.to_dict()
-    new_user = User(data['f_name'], data['l_name'], data['email'], data['password'], data['phone'])
     image = request.files['profile_image']
-    return new_user.add_user(request.form, image)
+    return UserService.add_user(request.form, image)
 
 @user_api.route('/update-user', methods=['POST'])
 def update_user():
@@ -38,9 +36,7 @@ def update_user():
     Return: A JSON response containing the status of the user updating with the updated user in case of success.
     """
     
-    data = request.form.to_dict()
-    updated_user = User(data['f_name'], data['l_name'], data['email'], data['password'], data['phone'])
-    return updated_user.update_user(request.form, request.files['profile_image'])
+    return UserService.update_user(request.form, request.files['profile_image'])
 
 @user_api.route('/delete-user', methods=['GET'])
 def delete_user():
@@ -51,7 +47,7 @@ def delete_user():
     """
     
     user_id = request.args.get('user_id')
-    return User.delete_user(user_id)
+    return UserService.delete_user(user_id)
 
 @user_api.route('/get-user', methods=['GET'])
 def get_user():
@@ -65,7 +61,7 @@ def get_user():
     """
     
     user_id = request.args.get('user_id')
-    return User.get_user(user_id)
+    return UserService.get_user(user_id)
 
 @user_api.route('/get-all-users', methods=['GET'])
 def get_all_user():
@@ -75,4 +71,4 @@ def get_all_user():
     Return: A JSON response containing a list of all users.
     """
 
-    return User.get_all_users()
+    return UserService.get_all_users()

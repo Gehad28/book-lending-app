@@ -6,10 +6,10 @@ app = create_app()
 
 @app.before_request
 def require_login():
-    #########################################################################################################
-    allowed_routes = ['auth/login', 'user/register']  # Allow unauthenticated access to login/register
-    #########################################################################################################
-    if 'user_id' not in session and request.endpoint not in allowed_routes:
+    if request.path in ['/auth/login', '/user/register', '/auth/is_logged_in']:  
+        return  # Allow access
+
+    if 'user' not in session:
         return jsonify({'error': 'Unauthorized'}), 401  # Block access if not logged in
 
 @app.route('/images/<path:filename>')
