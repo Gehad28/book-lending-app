@@ -28,8 +28,7 @@ export function addBook(book, fun) {
             if (JSON.parse(localStorage.getItem('user')).user_id != data.book.owner_id)
                 createBookItem(data.book);
         }
-    })
-    .then(error => console.log(error));
+    });
 }
 
 export const getBooks = (endipoint, fun) => {
@@ -41,10 +40,8 @@ export const getBooks = (endipoint, fun) => {
         return response.json();
     })
     .then(data => {
-        console.log(data);
         fun(data);
-    })
-    .then(error => console.log(error));
+    });
 }
 
 const borrowBook = (book, btn) => {
@@ -57,8 +54,7 @@ const borrowBook = (book, btn) => {
     })
     .then(data => {
         btn.disabled = true;
-    })
-    .then(error => console.log(error));
+    });
 }
 
 export const updateBook = (formData, id) => {
@@ -85,8 +81,7 @@ export const updateBook = (formData, id) => {
             hidepopup();
             updateBookCard(data.book);
         }
-    })
-    .then(error => console.log(error));
+    });
 }
 
 export const deleteBook = (id, bookElement) => {
@@ -98,10 +93,8 @@ export const deleteBook = (id, bookElement) => {
         return response.json();
     })
     .then(data => {
-        console.log(data);
         bookElement.remove();
-    })
-    .then(error => console.log(error));
+    });
 }
 
 export const setAsBorrowed = (book_id, btn, borrower_id, notification_id, notificationEle) => {
@@ -124,12 +117,12 @@ export const setAsBorrowed = (book_id, btn, borrower_id, notification_id, notifi
         if (btn.id == "set-borrow-btn")
             btn.innerText = "Make Available";
         else {
-            createEvent("updateBtnText");   // Dispatch an event called updatebtnText to update the set as borrowed btn
-            createEvent("createBorrowerInfo");
+            // Dispatch an event called updatebtnText to update the set as borrowed btn
+            createEvent("updateBtnText");   
             deleteNotification(notification_id, notificationEle);
+            location.reload(true);
         }
-    })
-    .then(error => console.log(error));
+    });
 }
 
 const makeAvailable = (book, btn) => {
@@ -141,11 +134,9 @@ const makeAvailable = (book, btn) => {
         return response.json();
     })
     .then(data => {
-        console.log(data);
         btn.innerText = "Set as Borrowed";
         document.getElementById("borrower-info")?.remove();
-    })
-    .then(error => console.log(error));
+    });
 }
 
 export const refuseBorrowing = (book_id, notification_id, notificationEle) => {
@@ -158,24 +149,7 @@ export const refuseBorrowing = (book_id, notification_id, notificationEle) => {
     })
     .then(data => {
         deleteNotification(notification_id, notificationEle);
-    })
-    .then(error => console.log(error));
-}
-
-const getUser = (user_id) => {
-    const user = {};
-    fetch(`${BASE_URL}/user/get-user?user_id=${user_id}`, {
-        method: 'GET',
-        credentials: 'include'
-    })
-    .then(response => {
-        return response.json();
-    })
-    .then(data => {
-        user = data.user;
-    })
-    .then(error => console.log(error));
-    return user;
+    });
 }
 
 // _____ Rendering Books ______
@@ -278,10 +252,6 @@ const createBookElement = (book) => {
             const borrowerInfo = createBorrowerInfo(book.borrower);
             cradInfo.appendChild(borrowerInfo);
         }
-        // document.addEventListener("createBorrowerInfo", () => {
-        //     const borrowerInfo = createBorrowerInfo(book.borrower);
-        //     cradInfo.appendChild(borrowerInfo);
-        // });
     }
     else {
         const userInfo = createUserInfo(book);

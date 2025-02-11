@@ -7,10 +7,8 @@ export const getNotifications = (fun) => {
         return response.json();
     })
     .then(data => {
-        console.log(data);
         fun(data.notifications);
-    })
-    .then(error => console.log(error));
+    });
 }
 
 export const deleteNotification = (id, notificationEle) => {
@@ -23,6 +21,5 @@ export const deleteNotification = (id, notificationEle) => {
     })
     .then(data => {
         notificationEle.remove();
-    })
-    .then(error => console.log(error));
+    });
 }

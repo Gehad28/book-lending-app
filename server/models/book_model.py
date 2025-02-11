@@ -1,7 +1,5 @@
 from server import db
 from sqlalchemy.sql import func
-from server.forms import BookForm, UpdateBookForm
-from flask import jsonify, request, session
 from server.helper import book_to_dict, upload, to_dict
 from server.services.user import User
 
@@ -40,14 +38,12 @@ class Book(db.Model):
         if (image):
             filename, file_path = upload(image)
             self.image_path = file_path
-        self.title = form['title_up']        # Already set in self(data['title']) !!!!!!
+        self.title = form['title_up']        
         self.author = form['author_up']
-        # db.session.add(self)
         db.session.commit()
         return book_to_dict(self)
     
     def borrow_book(self):
-        print(self)
         self.borrow_req = True
         db.session.add(self)
         db.session.commit()
@@ -60,7 +56,6 @@ class Book(db.Model):
             self.borrowed_by = borrower_id
         else:
             self.borrowed_by = None
-        # db.session.add(self)
         db.session.commit()
         return {'message': "Book updated"}
 

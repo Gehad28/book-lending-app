@@ -1,7 +1,5 @@
 from server import db, bcrypt
 from sqlalchemy.sql import func
-from server.forms import RegisterForm
-from flask import jsonify, session
 from server.helper import to_dict, upload
 
 class User(db.Model):

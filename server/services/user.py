@@ -1,8 +1,6 @@
-from server import db, bcrypt
-from sqlalchemy.sql import func
 from server.forms import RegisterForm, UpdateUserForm
 from flask import jsonify, session
-from server.helper import to_dict, upload
+from server.helper import to_dict
 from server.models.user_model import User
 
 

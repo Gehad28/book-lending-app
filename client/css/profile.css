@@ -141,10 +141,6 @@ h4 {
     gap: 0.5rem;
 }
 
-/* .books-list .set-borrow-btn:hover {
-    border-color: var(--third-color);
-} */
-
 .overlay {
     background-color: black;
     opacity: 30%;
@@ -221,7 +217,6 @@ input, input::placeholder {
 
 .notification-message {
     font-size: 0.9em;
-    /* color: var(--dark); */
 }
 
 .info {

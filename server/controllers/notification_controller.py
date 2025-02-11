@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session
+from flask import Blueprint, request
 from server.services.notification import Notification
 
 not_api = Blueprint('notification', __name__, url_prefix='/notification')

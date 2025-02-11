@@ -1,4 +1,4 @@
-from flask import Blueprint, request, session
+from flask import Blueprint, request
 from server.services.book import BookSevice
 
 book_api = Blueprint('book', __name__, url_prefix='/book')

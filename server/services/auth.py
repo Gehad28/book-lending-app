@@ -34,7 +34,6 @@ class Authentication():
             user = User.query.filter_by(email=form.email.data).first()
             if user and bcrypt.check_password_hash(user.password, form.password.data):
                 session['user'] = to_dict(user)
-                print(session)
                 return jsonify({'user': to_dict(user)}), 200
             else:
                 return jsonify({'error': "Incorrect email or password"}), 400
@@ -55,6 +54,6 @@ class Authentication():
         @wraps(f)
         def decorated_function(*args, **kwargs):
             if 'user_id' not in session:
-                return jsonify({'error': 'Unauthorized'}), 401  # Return an error if not logged in
+                return jsonify({'error': 'Unauthorized'}), 401
             return f(*args, **kwargs)
         return decorated_function
