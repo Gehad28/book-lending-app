@@ -114,8 +114,9 @@ export const setAsBorrowed = (book_id, btn, borrower_id, notification_id, notifi
         return response.json();
     })
     .then(data => {
-        if (btn.id == "set-borrow-btn")
-            btn.innerText = "Make Available";
+        if (btn.id == `set-borrow-btn-${book_id}`) {
+            location.reload(true);
+        }
         else {
             // Dispatch an event called updatebtnText to update the set as borrowed btn
             createEvent("updateBtnText");   
@@ -134,8 +135,9 @@ const makeAvailable = (book, btn) => {
         return response.json();
     })
     .then(data => {
-        btn.innerText = "Set as Borrowed";
-        document.getElementById("borrower-info")?.remove();
+        if (btn.id == `set-borrow-btn-${book.book_id}`) {
+            location.reload(true);
+        }
     });
 }
 
@@ -194,7 +196,7 @@ const createActionBtns = (book, bookElement, user_id) => {
 
 const createBorrowBtn = (book) => {
     const text = book.is_borrowed ? "Make Available" : "Set as Borrowed";
-    const setBorrowd = createBtn(text, "set-borrow-btn", "set-borrow-btn");
+    const setBorrowd = createBtn(text, "set-borrow-btn", `set-borrow-btn-${book.book_id}`);
     setBorrowd.addEventListener("click", () => handleBorrowing(book, setBorrowd));
     document.addEventListener("updateBtnText", () => setBorrowd.innerText = "Make Available");
     return setBorrowd;
