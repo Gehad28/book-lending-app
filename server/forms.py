@@ -86,10 +86,10 @@ class BookForm(FlaskForm):
     message = "This field is required"
     title = StringField('title', validators=[DataRequired(message),
                                             Length(min=2, max=50, message="Title must be between 2 and 50 characters."),
-                                            Regexp(r"^[A-Za-z0-9 ]+$", message="Title can only contain letters and numbers.")])
+                                            Regexp(r"^[A-Za-z0-9 .]+$", message="Title can only contain letters and numbers.")])
     author = StringField('author', validators=[DataRequired(message),
                                                Length(min=2, max=50, message="Author must be between 2 and 50 characters."),
-                                               Regexp(r"^[A-Za-z0-9 ]+$", message="Author can only contain letters and numbers.")])
+                                               Regexp(r"^[A-Za-z0-9 .]+$", message="Author can only contain letters and numbers.")])
     submit = SubmitField('Submit')
 
 class UpdateBookForm(FlaskForm):

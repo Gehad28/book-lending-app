@@ -17,6 +17,7 @@ class Notification(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), default=func.now(), onupdate=func.now())
     
+    # book = db.relationship('Book', backref='notification')
     owner = db.relationship('User', backref='recieved_notifications', foreign_keys=[owner_id])
     borrower = db.relationship('User', backref='sent_notifications', foreign_keys=[borrower_id])
 
