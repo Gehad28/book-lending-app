@@ -43,7 +43,6 @@ class UserService:
         if form.validate_on_submit():
                 user_data = user_to_update.update_user(form_data, image)
                 return jsonify({'updated_user': user_data}), 200
-        
         return jsonify({'errors': form.errors}), 400
 
     def delete_user(user_id):
